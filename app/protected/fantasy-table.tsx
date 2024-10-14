@@ -73,17 +73,19 @@ export default function FantasyBasketballLeague() {
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{leagueData.leagueData.standings.map((team, index) => (
-										<TableRow key={team.team_key}>
-											<TableCell>{index + 1}</TableCell>
-											<TableCell>{team.name}</TableCell>
-											<TableCell>{team.number_of_moves}</TableCell>
-											<TableCell>{team.number_of_trades}</TableCell>
-											<TableCell>
-												{team.clinched_playoffs ? "Yes" : "No"}
-											</TableCell>
-										</TableRow>
-									))}
+									{leagueData.leagueData.standings.map(
+										(team: any, index: number) => (
+											<TableRow key={team.team_key}>
+												<TableCell>{index + 1}</TableCell>
+												<TableCell>{team.name}</TableCell>
+												<TableCell>{team.number_of_moves}</TableCell>
+												<TableCell>{team.number_of_trades}</TableCell>
+												<TableCell>
+													{team.clinched_playoffs ? "Yes" : "No"}
+												</TableCell>
+											</TableRow>
+										),
+									)}
 								</TableBody>
 							</Table>
 						</TabsContent>
@@ -99,15 +101,17 @@ export default function FantasyBasketballLeague() {
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{leagueData.scoreboard.matchups.map((matchup, index) => (
-										<TableRow key={index}>
-											<TableCell>{matchup.week}</TableCell>
-											<TableCell>{matchup.teams[0].name}</TableCell>
-											<TableCell>{matchup.teams[0].points.total}</TableCell>
-											<TableCell>{matchup.teams[1].name}</TableCell>
-											<TableCell>{matchup.teams[1].points.total}</TableCell>
-										</TableRow>
-									))}
+									{leagueData.scoreboard.matchups.map(
+										(matchup: any, index: number) => (
+											<TableRow key={index}>
+												<TableCell>{matchup.week}</TableCell>
+												<TableCell>{matchup.teams[0].name}</TableCell>
+												<TableCell>{matchup.teams[0].points.total}</TableCell>
+												<TableCell>{matchup.teams[1].name}</TableCell>
+												<TableCell>{matchup.teams[1].points.total}</TableCell>
+											</TableRow>
+										),
+									)}
 								</TableBody>
 							</Table>
 						</TabsContent>
