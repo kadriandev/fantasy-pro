@@ -4,7 +4,7 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { createYahooClient } from "../yahoo/fantasy-api";
+import { createYahooClient } from "../yahoo/scoreboard";
 
 export const signUpAction = async (formData: FormData) => {
 	const email = formData.get("email")?.toString();
@@ -50,13 +50,15 @@ export const signInAction = async (formData: FormData) => {
 		return encodedRedirect("error", "/sign-in", error.message);
 	}
 
-	const params = new URLSearchParams();
-	params.set("client_id", process.env.NEXT_YAHOO_CLIENT_ID!);
-	params.set("redirect_uri", `${process.env.VERCEL_URL!}/auth/yahoo_callback`);
-	params.set("response_type", "code");
-	return redirect(
-		`https://api.login.yahoo.com/oauth2/request_auth?${params.toString()}`,
-	);
+	// const params = new URLSearchParams();
+	// params.set("client_id", process.env.NEXT_YAHOO_CLIENT_ID!);
+	// params.set("redirect_uri", `${process.env.VERCEL_URL!}/auth/yahoo_callback`);
+	// params.set("response_type", "code");
+	//
+	// return redirect(
+	// 	`https://api.login.yahoo.com/oauth2/request_auth?${params.toString()}`,
+	// );
+	return redirect("/auth/yahoo");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
