@@ -30,6 +30,6 @@ export async function GET(request: Request) {
 		return Response.json(games.games[0]);
 	} catch (e) {
 		console.log(e);
-		return null;
+		throw new Error("err");
 	}
 }

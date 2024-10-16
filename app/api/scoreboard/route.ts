@@ -38,6 +38,6 @@ export async function GET(request: Request) {
 		return Response.json({ leagueData, scoreboard });
 	} catch (e) {
 		console.log(e);
-		return null;
+		throw new Error("err");
 	}
 }

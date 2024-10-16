@@ -5,17 +5,17 @@ import LeagueInfo from "./league-info";
 import LeagueStandings from "./league-standings";
 import LeagueStats from "./league-stats";
 
-function fetchLeagueInfo(league_key): Promise<any> {
+function fetchLeagueInfo(league_key: string): Promise<any> {
 	return fetch(`/api/league?league_key=${league_key}`).then((res) =>
 		res.json(),
 	);
 }
 
-function fetchStats(league_key): Promise<any> {
+function fetchStats(league_key: string): Promise<any> {
 	return fetch(`/api/stats?league_key=${league_key}`).then((res) => res.json());
 }
 
-function fetchStandings(league_key): Promise<any> {
+function fetchStandings(league_key: string): Promise<any> {
 	return fetch(`/api/scoreboard?league_key=${league_key}`).then((res) =>
 		res.json(),
 	);
