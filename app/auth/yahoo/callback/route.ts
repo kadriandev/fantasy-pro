@@ -13,5 +13,5 @@ export async function GET(request: Request) {
 
 	cookieStore.set("refresh_token", res.refresh_token);
 
-	redirect("/protected");
+	redirect("/leagues");
 }

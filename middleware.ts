@@ -1,8 +1,24 @@
-import { type NextRequest } from "next/server";
-import { updateSession } from "@/utils/supabase/middleware";
+import { NextResponse, type NextRequest } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
+import { updateYahooAuth } from "./lib/yahoo/middleware";
 
 export async function middleware(request: NextRequest) {
-	return await updateSession(request);
+	let response = NextResponse.next({
+		request: {
+			headers: request.headers,
+		},
+	});
+
+	if (
+		!["forgot-password", "sign-in", "sign-up", "auth"].includes(
+			request.url.split("/")[3],
+		)
+	) {
+		response = await updateYahooAuth(request, response);
+		response = await updateSession(request, response);
+	}
+
+	return response;
 }
 
 export const config = {

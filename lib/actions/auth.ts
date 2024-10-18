@@ -1,7 +1,7 @@
 "use server";
 
-import { encodedRedirect } from "@/utils/utils";
-import { createClient } from "@/utils/supabase/server";
+import { encodedRedirect } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -49,14 +49,6 @@ export const signInAction = async (formData: FormData) => {
 		return encodedRedirect("error", "/sign-in", error.message);
 	}
 
-	// const params = new URLSearchParams();
-	// params.set("client_id", process.env.NEXT_YAHOO_CLIENT_ID!);
-	// params.set("redirect_uri", `${process.env.VERCEL_URL!}/auth/yahoo_callback`);
-	// params.set("response_type", "code");
-	//
-	// return redirect(
-	// 	`https://api.login.yahoo.com/oauth2/request_auth?${params.toString()}`,
-	// );
 	return redirect("/auth/yahoo");
 };
 
@@ -71,7 +63,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
 	}
 
 	const { error } = await supabase.auth.resetPasswordForEmail(email, {
-		redirectTo: `${origin}/auth/callback?redirect_to=/protected/reset-password`,
+		redirectTo: `${origin}/auth/callback?redirect_to=/reset-password`,
 	});
 
 	if (error) {
@@ -103,17 +95,13 @@ export const resetPasswordAction = async (formData: FormData) => {
 	if (!password || !confirmPassword) {
 		encodedRedirect(
 			"error",
-			"/protected/reset-password",
+			"/reset-password",
 			"Password and confirm password are required",
 		);
 	}
 
 	if (password !== confirmPassword) {
-		encodedRedirect(
-			"error",
-			"/protected/reset-password",
-			"Passwords do not match",
-		);
+		encodedRedirect("error", "/reset-password", "Passwords do not match");
 	}
 
 	const { error } = await supabase.auth.updateUser({
@@ -121,14 +109,10 @@ export const resetPasswordAction = async (formData: FormData) => {
 	});
 
 	if (error) {
-		encodedRedirect(
-			"error",
-			"/protected/reset-password",
-			"Password update failed",
-		);
+		encodedRedirect("error", "/reset-password", "Password update failed");
 	}
 
-	encodedRedirect("success", "/protected/reset-password", "Password updated");
+	encodedRedirect("success", "/reset-password", "Password updated");
 };
 
 export const signOutAction = async () => {

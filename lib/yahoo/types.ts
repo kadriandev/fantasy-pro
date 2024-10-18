@@ -1,0 +1,85 @@
+export type LeagueMeta = {
+	league_key: string;
+	league_id: string;
+	name: string;
+	url: string;
+	logo_url: string;
+	draft_status: string;
+	num_teams: number;
+	edit_key: string;
+	weekly_deadline: string;
+	league_update_timestamp: null;
+	scoring_type: string;
+	league_type: string;
+	renew: string;
+	renewed: string;
+	felo_tier: string;
+	iris_group_chat_id: string;
+	allow_add_to_dl_extra_pos: number;
+	is_pro_league: string;
+	is_cash_league: string;
+	current_week: number;
+	start_week: string;
+	start_date: string;
+	end_week: string;
+	end_date: string;
+	is_plus_league: string;
+	game_code: string;
+	season: string;
+};
+
+type YahooTeamStandings = {
+	team_key: string;
+	team_id: string;
+	name: string;
+	url: string;
+	team_logos: { size: string; url: string }[];
+	waiver_priority: number;
+	number_of_moves: number;
+	number_of_trades: number;
+	roster_adds: any[];
+	league_scoring_type: string;
+	has_draft_grade: number;
+	auction_budget_total: string;
+	auction_budget_spent: number;
+	managers: any[];
+	standings: {
+		rank: string;
+		outcome_totals: {
+			wins: string;
+			losses: string;
+			ties: string;
+		};
+	};
+};
+
+export type YahooStandings = {
+	league_key: string;
+	league_id: string;
+	name: string;
+	url: string;
+	logo_url: string;
+	draft_status: string;
+	num_teams: number;
+	edit_key: string;
+	weekly_deadline: string;
+	league_update_timestamp: string;
+	scoring_type: string;
+	league_type: string;
+	renew: string;
+	renewed: string;
+	felo_tier: string;
+	iris_group_chat_id: string;
+	allow_add_to_dl_extra_pos: number;
+	is_pro_league: string;
+	is_cash_league: string;
+	current_week: number;
+	start_week: string;
+	start_date: string;
+	end_week: string;
+	end_date: string;
+	is_plus_league: string;
+	game_code: string;
+	season: string;
+	standings: YahooTeamStandings[];
+};
