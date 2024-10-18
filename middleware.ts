@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
 			request.url.split("/")[3],
 		)
 	) {
-		response = await updateYahooAuth(request, response);
+		response = await updateYahooAuth(request);
 		response = await updateSession(request, response);
 	}
 
