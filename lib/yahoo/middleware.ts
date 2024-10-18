@@ -6,7 +6,9 @@ export const updateYahooAuth = async (request: NextRequest) => {
 	const refresh_token = request.cookies.get("refresh_token");
 
 	if (!access_token && !refresh_token) {
-		return NextResponse.redirect(process.env.VERCEL_URL + "/auth/yahoo");
+		return NextResponse.redirect(
+			"https://" + process.env.VERCEL_URL + "/auth/yahoo",
+		);
 	}
 
 	let response = NextResponse.next();
