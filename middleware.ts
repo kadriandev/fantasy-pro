@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 	});
 
 	if (
-		!["forgot-password", "sign-in", "sign-up", "auth"].includes(
+		!["forgot-password", "sign-in", "sign-up", "auth", "pricing"].includes(
 			request.url.split("/")[3],
 		)
 	) {
