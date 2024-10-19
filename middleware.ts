@@ -9,13 +9,21 @@ export async function middleware(request: NextRequest) {
 		},
 	});
 
+	const path = request.url.split("/")[3];
+	// Public Pages
 	if (
-		!["forgot-password", "sign-in", "sign-up", "auth", "pricing"].includes(
-			request.url.split("/")[3],
-		)
+		!["forgot-password", "sign-in", "sign-up", "auth", "pricing"].includes(path)
+	) {
+		response = await updateSession(request, response);
+	}
+
+	// Yahoo Pages
+	if (
+		path.startsWith("/league") ||
+		path === "reset-password" ||
+		path === "account"
 	) {
 		response = await updateYahooAuth(request);
-		response = await updateSession(request, response);
 	}
 
 	return response;
