@@ -41,7 +41,7 @@ export const getURL = (path: string = "") => {
 					process.env.NEXT_PUBLIC_VERCEL_URL.trim() !== ""
 				? process.env.NEXT_PUBLIC_VERCEL_URL
 				: // If neither is set, default to localhost for local development.
-					"http://localhost:3000/";
+					"https://localhost:3000/";
 
 	// Trim the URL and remove trailing slash if exists.
 	url = url.replace(/\/+$/, "");
@@ -51,7 +51,7 @@ export const getURL = (path: string = "") => {
 	path = path.replace(/^\/+/, "");
 
 	// Concatenate the URL and the path.
-	return path ? `${url}/${path}` : url;
+	return path ? `${url}${path}` : url;
 };
 
 export const postData = async ({

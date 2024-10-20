@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { refreshToken } from "./auth";
+import { getURL } from "../utils";
 
 export const updateYahooAuth = async (
 	request: NextRequest,
@@ -9,9 +10,8 @@ export const updateYahooAuth = async (
 	const refresh_token = request.cookies.get("refresh_token");
 
 	if (!access_token && !refresh_token) {
-		return NextResponse.redirect(
-			"https://" + process.env.VERCEL_URL + "/link-yahoo",
-		);
+		// "https://" + process.env.NEXT_PUBLIC_VERCEL_URL + "/link-yahoo",
+		return NextResponse.redirect(getURL("/link-yahoo"));
 	}
 
 	if (!access_token) {
