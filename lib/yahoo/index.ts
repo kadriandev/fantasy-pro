@@ -11,8 +11,8 @@ export const createYahooClient = (access_token: RequestCookie | undefined) => {
 	if (!access_token) throw new MissingAccessTokenError();
 
 	const yf = new YahooFantasy(
-		process.env.NEXT_YAHOO_CLIENT_ID!,
-		process.env.NEXT_YAHOO_CLIENT_SECRET!,
+		process.env.YAHOO_CLIENT_ID!,
+		process.env.YAHOO_CLIENT_SECRET!,
 	);
 
 	yf.setUserToken(access_token.value);
