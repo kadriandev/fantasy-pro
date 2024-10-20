@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
 		path === "reset-password" ||
 		path === "account"
 	) {
-		response = await updateYahooAuth(request);
+		response = await updateYahooAuth(request, response);
 	}
 
 	return response;
