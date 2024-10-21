@@ -1,15 +1,6 @@
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 import { attempt } from "@/lib/utils";
 import { createYahooClient } from "@/lib/yahoo";
-import { Loader2 } from "lucide-react";
 import { cookies } from "next/headers";
-import Link from "next/link";
 
 class LeagueError extends Error {
 	name = "LeagueError";
@@ -17,7 +8,7 @@ class LeagueError extends Error {
 	stack = undefined;
 }
 
-export default async function Page() {
+export default async function LeagueListPage() {
 	const cookieStore = cookies();
 	let access_token = cookieStore.get("access_token");
 
@@ -28,7 +19,6 @@ export default async function Page() {
 	if (err) throw new LeagueError();
 
 	const leagueData = games.games[0];
-
 	return (
 		<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
 			{leagueData?.leagues.map((league: any) => (

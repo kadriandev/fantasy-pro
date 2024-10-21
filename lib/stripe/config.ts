@@ -8,7 +8,7 @@ export const stripe = new Stripe(
 		appInfo: {
 			name: "Fantaasy Pro",
 			version: "0.0.0",
-			url: "https:/fantasy-pro.vercel.app",
+			url: "https:/fantasy-pro.kadriandev.com",
 		},
 	},
 );

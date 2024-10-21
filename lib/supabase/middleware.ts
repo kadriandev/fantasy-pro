@@ -29,12 +29,12 @@ export const updateSession = async (
 	);
 
 	const user = await supabase.auth.getUser();
-	if (request.nextUrl.pathname.startsWith("/protected") && user.error) {
+	if (request.nextUrl.pathname.startsWith("/fantasy") && user.error) {
 		return NextResponse.redirect(new URL("/sign-in", request.url));
 	}
 
 	if (request.nextUrl.pathname === "/" && !user.error) {
-		return NextResponse.redirect(new URL("/leagues", request.url));
+		return NextResponse.redirect(new URL("/fantasy", request.url));
 	}
 
 	return response;

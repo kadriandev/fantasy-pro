@@ -18,11 +18,7 @@ export async function middleware(request: NextRequest) {
 	}
 
 	// Yahoo Pages
-	if (
-		path.startsWith("/league") ||
-		path === "reset-password" ||
-		path === "account"
-	) {
+	if (path.startsWith("/fantasy")) {
 		response = await updateYahooAuth(request, response);
 	}
 

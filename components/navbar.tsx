@@ -16,7 +16,7 @@ export default async function Navbar() {
 					<Link href={"/"}>Fantasy Pro</Link>
 					{user ? (
 						<>
-							<Link href={"/leagues"}>Leagues</Link>
+							<Link href={"/fantasy/leagues"}>Leagues</Link>
 							<Link href={"/account"}>Account</Link>
 						</>
 					) : (
