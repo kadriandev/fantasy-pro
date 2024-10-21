@@ -7,7 +7,6 @@ export async function GET(request: Request) {
 	const cookieStore = cookies();
 	const refresh_token = cookieStore.get("refresh_token");
 	const res = await refreshToken(refresh_token);
-	console.log(res);
 
 	if (res.error) {
 		cookieStore.delete("refresh_token");
@@ -26,5 +25,5 @@ export async function GET(request: Request) {
 			path: "/",
 		});
 
-	return NextResponse.redirect(getURL("/fantasy"));
+	return NextResponse.redirect("fantasy");
 }
