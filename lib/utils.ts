@@ -46,12 +46,12 @@ export const getURL = (path: string = "") => {
 	// Trim the URL and remove trailing slash if exists.
 	url = url.replace(/\/+$/, "");
 	// Make sure to include `https://` when not localhost.
-	url = url.includes("http") ? url : `https://${url}`;
+	url = url.includes("https") ? url : `https://${url}`;
 	// Ensure path starts without a slash to avoid double slashes in the final URL.
 	path = path.replace(/^\/+/, "");
 
 	// Concatenate the URL and the path.
-	return path ? `${url}${path}` : url;
+	return path ? `${url}/${path}` : url;
 };
 
 export const postData = async ({

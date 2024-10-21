@@ -10,7 +10,9 @@ export default async function Layout({ children }: { children: ReactNode }) {
 	const refresh_token = cookieStore.get("refresh_token");
 
 	if (!access_token && !refresh_token) {
-		redirect(getURL("/fantasy/link-yahoo"));
+		const url = getURL("/fantasy/link-yahoo");
+		console.log(url);
+		redirect(url);
 	} else if (refresh_token) {
 		const res = await refreshToken(refresh_token);
 		if (res.error) {
