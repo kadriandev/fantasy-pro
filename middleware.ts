@@ -1,6 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
-import { updateYahooAuth } from "./lib/yahoo/middleware";
 
 export async function middleware(request: NextRequest) {
 	let response = NextResponse.next({
@@ -17,10 +16,10 @@ export async function middleware(request: NextRequest) {
 		response = await updateSession(request, response);
 	}
 
-	// Yahoo Pages
-	if (path.startsWith("/fantasy")) {
-		response = await updateYahooAuth(request, response);
-	}
+	// // Yahoo Pages
+	// if (path.startsWith("/fantasy")) {
+	// 	response = await updateYahooAuth(request, response);
+	// }
 
 	return response;
 }
