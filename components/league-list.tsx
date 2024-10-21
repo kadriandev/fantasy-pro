@@ -30,7 +30,10 @@ export default async function LeagueListPage() {
 	return (
 		<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
 			{leagueData?.leagues.map((league: any) => (
-				<Link key={league.league_key} href={`/leagues/${league.league_key}`}>
+				<Link
+					key={league.league_key}
+					href={`/fantasy/leagues/${league.league_key}`}
+				>
 					<Card className="flex flex-col hover:bg-white/20">
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2">
