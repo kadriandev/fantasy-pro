@@ -11,7 +11,7 @@ export const updateYahooAuth = async (
 
 	if (!access_token && !refresh_token) {
 		// "https://" + process.env.NEXT_PUBLIC_VERCEL_URL + "/link-yahoo",
-		return NextResponse.redirect(getURL("/link-yahoo"));
+		return NextResponse.redirect(getURL("/fantasy/link-yahoo"));
 	}
 
 	if (!access_token) {
