@@ -6,6 +6,7 @@ export async function GET(request: Request) {
 	const cookieStore = cookies();
 
 	const res = await accessToken(request);
+	console.log(res);
 
 	cookieStore.set("access_token", res.access_token, {
 		expires: res.expires_in,
