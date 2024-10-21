@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { Button } from "./ui/button";
-import { accessToken, authToken } from "@/lib/yahoo/auth";
+import { authToken } from "@/lib/yahoo/auth";
 
 export default function MissingYahooAuthPage() {
 	const cookieStore = cookies();
