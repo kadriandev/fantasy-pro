@@ -83,3 +83,46 @@ export type YahooStandings = {
 	season: string;
 	standings: YahooTeamStandings[];
 };
+
+export type YahooPlayer = {
+	player_key: string;
+	player_id: string;
+	name: {
+		full: string;
+		first: string;
+		last: string;
+		ascii_first: string;
+		ascii_last: string;
+	};
+	editorial_player_key: string;
+	editorial_team_key: string;
+	editorial_team_full_name: string;
+	editorial_team_abbr: string;
+	uniform_number: string;
+	display_position: string;
+	headshot: string;
+	is_undroppable: string;
+	position_type: string;
+	eligible_positions: string[];
+};
+
+export type YahooTeamRoster = {
+	team_key: string;
+	team_id: string;
+	name: string;
+	url: string;
+	team_logo: string;
+	waiver_priority: number;
+	number_of_moves: string;
+	number_of_trades: number;
+	clinched_playoffs: number;
+	managers: [
+		{
+			manager_id: string;
+			nickname: string;
+			guid: string;
+			is_commissioner: string;
+		},
+	];
+	roster: YahooPlayer[];
+};

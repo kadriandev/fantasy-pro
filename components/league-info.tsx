@@ -25,8 +25,8 @@ export default async function LeagueInfo({ league_key }: LeagueInfoProps) {
 				<CardTitle>League Info</CardTitle>
 				<CardDescription>{data.name}</CardDescription>
 				<div className="mt-4 border-t py-4 flex flex-col gap-4">
-					<Link href={`/leagues/${league_key}`}>Overview</Link>
-					<Link href={`/leagues/${league_key}/teams`}>Teams</Link>
+					<Link href={`/fantasy/leagues/${league_key}`}>Overview</Link>
+					<Link href={`/fantasy/leagues/${league_key}/teams`}>Teams</Link>
 				</div>
 			</CardHeader>
 		</Card>
