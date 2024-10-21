@@ -25,5 +25,5 @@ export async function GET(request: Request) {
 			path: "/",
 		});
 
-	return NextResponse.redirect("fantasy");
+	return NextResponse.redirect(getURL("/fantasy"));
 }

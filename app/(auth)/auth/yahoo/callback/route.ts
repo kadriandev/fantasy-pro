@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { accessToken } from "@/lib/yahoo/auth";
 import { NextResponse } from "next/server";
+import { getURL } from "@/lib/utils";
 
 export async function GET(request: Request) {
 	const cookieStore = cookies();
@@ -25,5 +26,5 @@ export async function GET(request: Request) {
 			path: "/",
 		});
 
-	return NextResponse.redirect("/fantasy");
+	return NextResponse.redirect(getURL("/fantasy"));
 }
