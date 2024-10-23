@@ -1,21 +1,25 @@
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import YahooFantasy from "yahoo-fantasy";
+import { cookies } from "next/headers";
 
-class MissingAccessTokenError extends Error {
-	name = "MissingAccessTokenError";
-	message = "Missing token required to access Yahoo! resources.";
-	// stack = undefined;
-}
+// class MissingAccessTokenError extends Error {
+//   name = "MissingAccessTokenError";
+//   message = "Missing token required to access Yahoo! resources.";
+//   // stack = undefined;
+// }
 
-export const createYahooClient = (access_token: RequestCookie | undefined) => {
-	if (!access_token) throw new MissingAccessTokenError();
+export const createYahooClient = async () => {
+  const cookieStore = cookies();
+  const access_token = cookieStore.get("access_token");
+  const test = cookieStore.get("test");
+  console.log(test);
 
-	const yf = new YahooFantasy(
-		process.env.YAHOO_CLIENT_ID!,
-		process.env.YAHOO_CLIENT_SECRET!,
-	);
+  let token = access_token?.value;
+  const yf = new YahooFantasy(
+    process.env.YAHOO_CLIENT_ID!,
+    process.env.YAHOO_CLIENT_SECRET!,
+  );
 
-	yf.setUserToken(access_token.value);
+  yf.setUserToken(token);
 
-	return yf;
+  return yf;
 };
