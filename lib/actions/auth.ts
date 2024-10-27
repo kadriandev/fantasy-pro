@@ -2,7 +2,7 @@
 
 import { encodedRedirect } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const signUpAction = async (formData: FormData) => {
@@ -116,6 +116,11 @@ export const resetPasswordAction = async (formData: FormData) => {
 };
 
 export const signOutAction = async () => {
+	const cookieStore = cookies();
+
+	cookieStore.delete("access_token");
+	cookieStore.delete("refresh_token");
+
 	const supabase = createClient();
 	await supabase.auth.signOut();
 	return redirect("/sign-in");

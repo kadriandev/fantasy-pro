@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -17,6 +18,11 @@ export default async function Layout({
 	}
 
 	return (
-		<div className="max-w-7xl flex flex-col gap-12 items-start">{children}</div>
+		<>
+			<Navbar />
+			<div className="mt-14 max-w-7xl flex flex-col gap-12 items-start">
+				{children}
+			</div>
+		</>
 	);
 }
