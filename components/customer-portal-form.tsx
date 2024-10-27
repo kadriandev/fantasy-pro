@@ -56,7 +56,9 @@ export default function CustomerPortalForm({ subscription }: Props) {
 					{subscription ? (
 						`${subscriptionPrice}/${subscription?.prices?.interval}`
 					) : (
-						<Link href="/dev/stripe-example-page">Choose your plan</Link>
+						<Link href={new URL(process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL!)}>
+							Choose your plan
+						</Link>
 					)}
 				</div>
 			</div>
@@ -64,9 +66,12 @@ export default function CustomerPortalForm({ subscription }: Props) {
 			<div className="rounded-b-md border-t border-zinc-700 bg-zinc-900 p-4 text-zinc-500">
 				<div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
 					<p className="pb-4 sm:pb-0">Manage your subscription on Stripe.</p>
-					<Button onClick={handleStripePortalRequest} disabled={isSubmitting}>
-						Open customer portal
-					</Button>
+					<Link href={new URL(process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL!)}>
+						<Button disabled={isSubmitting}>Open customer portal</Button>
+					</Link>
+					{/* <Button onClick={handleStripePortalRequest} disabled={isSubmitting}> */}
+					{/* 	Open customer portal */}
+					{/* </Button> */}
 				</div>
 			</div>
 		</div>
