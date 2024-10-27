@@ -53,25 +53,33 @@ export default function CustomerPortalForm({ subscription }: Props) {
 						: "You are not currently subscribed to any plan."}
 				</p>
 				<div className="mb-4 mt-8 text-xl font-semibold">
-					{subscription ? (
-						`${subscriptionPrice}/${subscription?.prices?.interval}`
-					) : (
-						<Link href={new URL(process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL!)}>
-							Choose your plan
-						</Link>
-					)}
+					{subscription &&
+						`${subscriptionPrice}/${subscription?.prices?.interval}`}
 				</div>
 			</div>
 
 			<div className="rounded-b-md border-t border-zinc-700 bg-zinc-900 p-4 text-zinc-500">
 				<div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-					<p className="pb-4 sm:pb-0">Manage your subscription on Stripe.</p>
-					<Link href={new URL(process.env.NEXT_PUBLIC_STRIPE_PORTAL_URL!)}>
-						<Button disabled={isSubmitting}>Open customer portal</Button>
-					</Link>
-					{/* <Button onClick={handleStripePortalRequest} disabled={isSubmitting}> */}
-					{/* 	Open customer portal */}
-					{/* </Button> */}
+					{subscription ? (
+						<>
+							<p className="pb-4 sm:pb-0">
+								Manage your subscription on Stripe.
+							</p>
+							<Button
+								onClick={handleStripePortalRequest}
+								disabled={isSubmitting}
+							>
+								Open customer portal
+							</Button>
+						</>
+					) : (
+						<>
+							<p className="pb-4 sm:pb-0">Please select a plan</p>
+							<Link href="/account/plans">
+								<Button>See Plans</Button>
+							</Link>
+						</>
+					)}
 				</div>
 			</div>
 		</div>

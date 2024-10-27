@@ -92,8 +92,10 @@ export default function Pricing({ user, products, subscription }: Props) {
 
 	return (
 		<section className="bg-black">
-			<h1 className="text-4xl font-bold">{product.name}</h1>
-			<h2 className="text-xl text-zinc-600">{product.description}</h2>
+			<div className="container">
+				<h1 className="text-4xl font-bold">{product.name}</h1>
+				<h2 className="text-xl text-zinc-600">{product.description}</h2>
+			</div>
 			<div className="mt-12 space-y-0 sm:mt-16 flex flex-wrap justify-center gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
 				{product.prices.map((price, i) => {
 					const priceString = new Intl.NumberFormat("en-US", {
