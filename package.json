@@ -4,6 +4,8 @@
     "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
+    "start:db": "supabase start",
+    "stop:db": "supabase stop",
     "generate:db-types": "npx supabase gen types --lang=typescript --project-id='tctcskwywktxjfketbtn' --schema public > lib/supabase/types.ts"
   },
   "dependencies": {
