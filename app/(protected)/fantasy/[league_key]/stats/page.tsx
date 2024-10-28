@@ -63,6 +63,7 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 	const userTeam = teams.teams
 		.flatMap((t) => t.teams)
 		.find((t) => t.team_key.startsWith(params.league_key));
+	if (!userTeam) throw new Error("Error getting the user's team");
 
 	const columns: ColumnDef<FantasyStats>[] = [
 		{ header: "Team", accessorKey: "team", enableSorting: false },
@@ -97,7 +98,7 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 
 	const weeks: string[] = Array.from(
 		{ length: +settings.current_week },
-		(x, i) => i + 1 + "",
+		(_, i) => i + 1 + "",
 	);
 
 	return (
@@ -110,7 +111,8 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 			</h1>
 			<ScrollArea className="h-[900px]">
 				<DataTable
-					teamName={userTeam?.name ?? ""}
+					team={userTeam}
+					leagueKey={params.league_key}
 					columns={columns}
 					data={data}
 				/>

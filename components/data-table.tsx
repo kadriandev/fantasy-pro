@@ -18,17 +18,22 @@ import {
 } from "./ui/table";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
+import { YahooUserGameTeam } from "@/lib/yahoo/types";
+import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
-	teamName: string;
+	team: YahooUserGameTeam;
+	leagueKey: string;
 }
 
 export default function DataTable<TData, TValue>({
 	columns,
 	data,
-	teamName,
+	team,
+	leagueKey,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -75,7 +80,7 @@ export default function DataTable<TData, TValue>({
 								key={row.id}
 								data-state={row.getIsSelected() && "selected"}
 								className={cn(
-									row.getValue("team") === teamName && "bg-purple-700",
+									row.getValue("team") === team.name && "bg-purple-700",
 								)}
 							>
 								{row.getVisibleCells().map((cell) => (

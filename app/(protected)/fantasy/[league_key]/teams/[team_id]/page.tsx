@@ -13,11 +13,13 @@ import { YahooTeamRoster } from "@/lib/yahoo/types";
 export default async function Page({
 	params,
 }: {
-	params: { team_key: string };
+	params: { league_key: string; team_id: string };
 }) {
 	const yf = await createYahooClient();
 	const [err, data] = await attempt(
-		yf.team.roster(params.team_key) as Promise<YahooTeamRoster>,
+		yf.team.roster(
+			`${params.league_key}.t.${params.team_id}`,
+		) as Promise<YahooTeamRoster>,
 	);
 	if (err) throw new Error("Unable to get roster.");
 

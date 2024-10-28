@@ -311,28 +311,28 @@ export type YahooUserGameTeams = {
 		type: string;
 		url: string;
 		season: string;
-		teams: [
-			{
-				team_key: string;
-				team_id: string;
-				name: string;
-				is_owned_by_current_login: number;
-				url: string;
-				team_logo: string;
-				waiver_priority: number;
-				number_of_moves: string;
-				number_of_trades: number;
-				managers: [
-					{
-						manager_id: string;
-						nickname: string;
-						guid: string;
-						is_current_login: string;
-						email: string;
-						image_url: string;
-					},
-				];
-			},
-		];
+		teams: Array<YahooUserGameTeam>;
 	}>;
+};
+
+export type YahooUserGameTeam = {
+	team_key: string;
+	team_id: string;
+	name: string;
+	is_owned_by_current_login: number;
+	url: string;
+	team_logo: string;
+	waiver_priority: number;
+	number_of_moves: string;
+	number_of_trades: number;
+	managers: [
+		{
+			manager_id: string;
+			nickname: string;
+			guid: string;
+			is_current_login: string;
+			email: string;
+			image_url: string;
+		},
+	];
 };
