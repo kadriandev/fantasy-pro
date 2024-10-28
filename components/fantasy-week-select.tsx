@@ -8,23 +8,34 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useQueryState } from "nuqs";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface FantasyWeekSelectProps {
+	league_key: string;
 	weeks: string[];
 }
 
 export default function FantasyWeekSelect(props: FantasyWeekSelectProps) {
-	const { weeks } = props;
+	const { league_key, weeks } = props;
+
+	const router = useRouter();
 	const [week, setWeek] = useQueryState("week");
+
+	const selectWeek = (week: string) => {
+		if (week === "current") router.replace(`/fantasy/${league_key}/stats`);
+		else router.replace(`/fantasy/${league_key}/stats?week=${week}`);
+	};
+
 	return (
-		<Select value={week ?? undefined} onValueChange={(v) => setWeek(v)}>
+		<Select value={week ?? "current"} onValueChange={selectWeek}>
 			<SelectTrigger>
 				<SelectValue placeholder="Current Week" />
 			</SelectTrigger>
 			<SelectContent>
-				{weeks.map((week) => (
-					<SelectItem key={week} value={week}>
-						Week {week}
+				{weeks.toReversed().map((week, i) => (
+					<SelectItem key={week} value={i === 0 ? "current" : week}>
+						{i === 0 ? "Current Week" : `Week ${week}`}
 					</SelectItem>
 				))}
 			</SelectContent>

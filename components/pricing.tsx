@@ -41,10 +41,7 @@ export default function Pricing({ user, products, subscription }: Props) {
 			return router.push("/sign-in");
 		}
 
-		const { errorRedirect, sessionId } = await checkoutWithStripe(
-			price,
-			currentPath,
-		);
+		const { errorRedirect, sessionId } = await checkoutWithStripe(price);
 
 		if (errorRedirect) {
 			return router.push(errorRedirect);

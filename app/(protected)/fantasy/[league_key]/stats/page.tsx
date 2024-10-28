@@ -106,7 +106,7 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 			<h1 className="py-4 flex text-xl font-bold">
 				Stats
 				<span className="ml-auto">
-					<FantasyWeekSelect weeks={weeks} />
+					<FantasyWeekSelect league_key={params.league_key} weeks={weeks} />
 				</span>
 			</h1>
 			<ScrollArea className="h-[900px]">
