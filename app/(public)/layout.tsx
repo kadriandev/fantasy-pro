@@ -20,9 +20,9 @@ export default async function Layout({
 	return (
 		<>
 			<Navbar />
-			<div className="mt-14 max-w-7xl flex flex-col gap-12 items-start">
+			<main className="mt-14 min-h-screen flex flex-col items-center">
 				{children}
-			</div>
+			</main>
 		</>
 	);
 }

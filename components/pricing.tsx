@@ -67,7 +67,7 @@ export default function Pricing({ user, products, subscription }: Props) {
 
 	if (!product) {
 		return (
-			<section className="bg-black">
+			<section>
 				<div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
 					<div className="sm:flex sm:flex-col sm:align-center"></div>
 					<p className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
@@ -88,7 +88,7 @@ export default function Pricing({ user, products, subscription }: Props) {
 	}
 
 	return (
-		<section className="bg-black">
+		<section>
 			<div className="container">
 				<h1 className="text-4xl font-bold">{product.name}</h1>
 				<h2 className="text-xl text-zinc-600">{product.description}</h2>

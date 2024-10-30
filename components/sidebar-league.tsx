@@ -4,15 +4,25 @@ import { usePathname } from "next/navigation";
 import { SidebarMenuItem, SidebarMenuButton } from "./ui/sidebar";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { YahooGameLeague } from "@/lib/yahoo/types";
+import { ArrowRight } from "lucide-react";
 
 interface SidebarLeagueProps {
-	league_key: string;
+	league: YahooGameLeague;
 }
 
-export default function SidebarLeagueLinks({ league_key }: SidebarLeagueProps) {
+export default function SidebarLeagueLinks({ league }: SidebarLeagueProps) {
 	const pathname = usePathname();
+	const league_key = league.league_key;
 	return (
 		<>
+			<SidebarMenuItem className={"ml-4"}>
+				<Link href={league.url}>
+					<SidebarMenuButton className={"text-purple-300"}>
+						Go to Yahoo <ArrowRight size={20} />
+					</SidebarMenuButton>
+				</Link>
+			</SidebarMenuItem>
 			<SidebarMenuItem
 				className={cn(
 					"ml-4",

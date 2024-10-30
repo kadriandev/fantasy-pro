@@ -18,22 +18,19 @@ import {
 } from "./ui/table";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { redirect } from "next/navigation";
 import { YahooUserGameTeam } from "@/lib/yahoo/types";
-import Link from "next/link";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	team: YahooUserGameTeam;
-	leagueKey: string;
 }
 
 export default function DataTable<TData, TValue>({
 	columns,
 	data,
 	team,
-	leagueKey,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -61,12 +58,20 @@ export default function DataTable<TData, TValue>({
 										key={header.id}
 										onClick={header.column.getToggleSortingHandler()}
 									>
-										{header.isPlaceholder
-											? null
-											: flexRender(
-													header.column.columnDef.header,
-													header.getContext(),
-												)}
+										<span className="flex items-center gap-1">
+											{header.isPlaceholder
+												? null
+												: flexRender(
+														header.column.columnDef.header,
+														header.getContext(),
+													)}
+											{header.column.getIsSorted() === "asc" && (
+												<ArrowUp size={20} />
+											)}
+											{header.column.getIsSorted() === "desc" && (
+												<ArrowDown size={20} />
+											)}
+										</span>
 									</TableHead>
 								);
 							})}

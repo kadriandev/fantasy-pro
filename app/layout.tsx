@@ -27,11 +27,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<NuqsAdapter>
-						<main className="min-h-screen flex flex-col items-center">
-							{children}
-						</main>
-					</NuqsAdapter>
+					<NuqsAdapter>{children}</NuqsAdapter>
 				</ThemeProvider>
 			</body>
 		</html>

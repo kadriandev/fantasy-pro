@@ -47,6 +47,7 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 	const settings_promise: Promise<YahooLeagueSettings> = yf.league.settings(
 		params.league_key,
 	);
+
 	const scoreboard_promise: Promise<YahooLeagueScoreboard> =
 		yf.league.scoreboard(params.league_key, week);
 
@@ -110,12 +111,7 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 				</span>
 			</h1>
 			<ScrollArea className="h-[900px]">
-				<DataTable
-					team={userTeam}
-					leagueKey={params.league_key}
-					columns={columns}
-					data={data}
-				/>
+				<DataTable team={userTeam} columns={columns} data={data} />
 			</ScrollArea>
 		</>
 	);

@@ -116,10 +116,10 @@ export const resetPasswordAction = async (formData: FormData) => {
 };
 
 export const signOutAction = async () => {
-	const cookieStore = cookies();
+	// const cookieStore = cookies();
 
-	cookieStore.delete("access_token");
-	cookieStore.delete("refresh_token");
+	// cookieStore.delete("access_token");
+	// cookieStore.delete("refresh_token");
 
 	const supabase = createClient();
 	await supabase.auth.signOut();
