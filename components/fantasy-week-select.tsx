@@ -8,7 +8,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useQueryState } from "nuqs";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface FantasyWeekSelectProps {
@@ -20,7 +19,7 @@ export default function FantasyWeekSelect(props: FantasyWeekSelectProps) {
 	const { league_key, weeks } = props;
 
 	const router = useRouter();
-	const [week, setWeek] = useQueryState("week");
+	const [week, _] = useQueryState("week");
 
 	const selectWeek = (week: string) => {
 		if (week === "current") router.replace(`/fantasy/${league_key}/stats`);

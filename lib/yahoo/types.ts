@@ -145,30 +145,30 @@ export type YahooGameLeagues = {
 			type: string;
 			url: string;
 			season: string;
-			leagues: [
-				{
-					league_key: string;
-					league_id: string;
-					name: string;
-					url: string;
-					draft_status: string;
-					num_teams: number;
-					edit_key: string;
-					weekly_deadline: string;
-					league_update_timestamp: string;
-					scoring_type: string;
-					league_type: string;
-					renew: string;
-					renewed: string;
-					short_invitation_url: string;
-					is_pro_league: string;
-					start_date: string;
-					end_date: string;
-					is_finished: number;
-				},
-			];
+			leagues: YahooGameLeague[];
 		},
 	];
+};
+
+export type YahooGameLeague = {
+	league_key: string;
+	league_id: string;
+	name: string;
+	url: string;
+	draft_status: string;
+	num_teams: number;
+	edit_key: string;
+	weekly_deadline: string;
+	league_update_timestamp: string;
+	scoring_type: string;
+	league_type: string;
+	renew: string;
+	renewed: string;
+	short_invitation_url: string;
+	is_pro_league: string;
+	start_date: string;
+	end_date: string;
+	is_finished: number;
 };
 
 export type LeagueMeta = {

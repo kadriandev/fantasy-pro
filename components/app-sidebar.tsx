@@ -51,7 +51,7 @@ export async function AppSidebar() {
 	return (
 		<Sidebar>
 			<SidebarHeader className="m-2 text-xl font-bold text-purple-700">
-				Fantasy Pro
+				<Link href="/fantasy">Fantasy Pro</Link>
 			</SidebarHeader>
 			<SidebarContent>
 				{subscription &&
@@ -78,9 +78,7 @@ export async function AppSidebar() {
 												</SidebarGroupLabel>
 												<CollapsibleContent>
 													<SidebarGroupContent>
-														<SidebarLeagueLinks
-															league_key={league.league_key}
-														/>
+														<SidebarLeagueLinks league={league} />
 													</SidebarGroupContent>
 												</CollapsibleContent>
 											</SidebarGroup>
