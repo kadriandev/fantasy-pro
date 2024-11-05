@@ -31,11 +31,11 @@ export const getUserLeagues = async (supabase: SupabaseClient<Database>) => {
 	return data;
 };
 
-export const getLeagueCurrentWeek = async (
+export const getLeagueCurrentWeek = (
 	supabase: SupabaseClient<Database>,
 	league_key: string,
 ) => {
-	const { data } = await supabase
+	return supabase
 		.from("leagues")
 		.select("stat_categories")
 		.eq("league_key", league_key)
@@ -167,8 +167,8 @@ export const getRadarChartData = async (
 				? statValue(a, c) - statValue(b, c)
 				: statValue(b, c) - statValue(a, c);
 
-		let lastWeek = statData[0].toSorted(sortStat);
-		let thisWeek = statData[1].toSorted(sortStat);
+		let lastWeek = [...statData[0]].sort(sortStat);
+		let thisWeek = [...statData[1]].sort(sortStat);
 
 		return {
 			stat: c.abbr,
