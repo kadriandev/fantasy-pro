@@ -1,13 +1,7 @@
 import YahooFantasy from "yahoo-fantasy";
 import { cookies } from "next/headers";
 
-// class MissingAccessTokenError extends Error {
-//   name = "MissingAccessTokenError";
-//   message = "Missing token required to access Yahoo! resources.";
-//   // stack = undefined;
-// }
-
-export const createYahooClient = async () => {
+export const createYahooClient = () => {
 	const cookieStore = cookies();
 	const access_token = cookieStore.get("access_token");
 

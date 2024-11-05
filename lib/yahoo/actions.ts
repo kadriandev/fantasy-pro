@@ -6,6 +6,7 @@ import { createClient } from "../supabase/server";
 import { attempt } from "../utils";
 import { insertUserLeagues } from "./queries";
 import {
+	YahooLeagueSettings,
 	YahooUserGameLeagues,
 	YahooUserGameTeams,
 	YahooUserGames,
@@ -32,16 +33,25 @@ export async function fetchUserLeagues() {
 		if (err) throw new Error();
 		const [teams, game_leagues] = data;
 
-		const leagues = game_leagues.games
-			.find((g) => g.game_key === game.game_key)
-			?.leagues.map((league) => ({
+		const lls = game_leagues.games.find(
+			(g) => g.game_key === game.game_key,
+		)?.leagues;
+		if (!lls) return;
+
+		let leagues = [];
+		for (const league of lls) {
+			const settings: YahooLeagueSettings = await yf.league.settings(
+				league.league_key,
+			);
+			leagues.push({
 				league_key: league.league_key,
 				name: league.name,
 				num_teams: league.num_teams,
 				game: game.code,
 				url: league.url,
-			}));
-		if (!leagues) return;
+				stat_categories: settings.settings.stat_categories,
+			});
+		}
 
 		const user_leagues = leagues.map((l) => {
 			const team_id = teams.teams

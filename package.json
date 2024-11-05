@@ -6,7 +6,7 @@
     "start": "next start",
     "start:db": "supabase start",
     "stop:db": "supabase stop",
-    "generate:db-types": "npx supabase gen types --lang=typescript --project-id='tctcskwywktxjfketbtn' --schema public > lib/supabase/types.ts"
+    "generate:db-types": "npx supabase gen types --lang=typescript --project-id='lrgrsnfuncsijmnnbfbp' --schema public > lib/supabase/types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -42,6 +42,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.53.0",
+    "recharts": "^2.13.3",
     "stripe": "^17.2.0",
     "yahoo-fantasy": "^5.3.0",
     "zod": "^3.23.8"

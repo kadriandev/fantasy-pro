@@ -24,6 +24,65 @@ export type Database = {
         }
         Relationships: []
       }
+      league_stats: {
+        Row: {
+          league_key: string
+          name: string | null
+          stats: Json | null
+          team_id: string
+          week: number
+        }
+        Insert: {
+          league_key: string
+          name?: string | null
+          stats?: Json | null
+          team_id: string
+          week: number
+        }
+        Update: {
+          league_key?: string
+          name?: string | null
+          stats?: Json | null
+          team_id?: string
+          week?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_leagues_league_key_fkey"
+            columns: ["league_key"]
+            isOneToOne: false
+            referencedRelation: "leagues"
+            referencedColumns: ["league_key"]
+          },
+        ]
+      }
+      leagues: {
+        Row: {
+          game: string | null
+          league_key: string
+          name: string | null
+          num_teams: number | null
+          stat_categories: Json | null
+          url: string | null
+        }
+        Insert: {
+          game?: string | null
+          league_key: string
+          name?: string | null
+          num_teams?: number | null
+          stat_categories?: Json | null
+          url?: string | null
+        }
+        Update: {
+          game?: string | null
+          league_key?: string
+          name?: string | null
+          num_teams?: number | null
+          stat_categories?: Json | null
+          url?: string | null
+        }
+        Relationships: []
+      }
       prices: {
         Row: {
           active: boolean | null
@@ -163,44 +222,38 @@ export type Database = {
           },
         ]
       }
-      transactions: {
+      user_leagues: {
         Row: {
-          amount: number | null
-          attrs: Json | null
-          created: string | null
-          currency: string | null
-          description: string | null
-          fee: number | null
-          id: string | null
-          net: number | null
-          status: string | null
-          type: string | null
+          league_key: string
+          team_id: string | null
+          user_id: string
         }
         Insert: {
-          amount?: number | null
-          attrs?: Json | null
-          created?: string | null
-          currency?: string | null
-          description?: string | null
-          fee?: number | null
-          id?: string | null
-          net?: number | null
-          status?: string | null
-          type?: string | null
+          league_key: string
+          team_id?: string | null
+          user_id?: string
         }
         Update: {
-          amount?: number | null
-          attrs?: Json | null
-          created?: string | null
-          currency?: string | null
-          description?: string | null
-          fee?: number | null
-          id?: string | null
-          net?: number | null
-          status?: string | null
-          type?: string | null
+          league_key?: string
+          team_id?: string | null
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_leagues_league_id_fkey"
+            columns: ["league_key"]
+            isOneToOne: false
+            referencedRelation: "leagues"
+            referencedColumns: ["league_key"]
+          },
+          {
+            foreignKeyName: "user_leagues_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {

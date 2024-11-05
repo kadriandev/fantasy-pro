@@ -7,11 +7,35 @@ import { cn } from "@/lib/utils";
 import { YahooGameLeague } from "@/lib/yahoo/types";
 import { ArrowRight } from "lucide-react";
 
-interface SidebarLeagueProps {
+interface SidebarLeagueLinksProps {
 	league: YahooGameLeague;
 }
 
-export default function SidebarLeagueLinks({ league }: SidebarLeagueProps) {
+interface SidebarLinkProps {
+	label: string;
+	link: string;
+	pathname: string;
+}
+
+function SidebarLink({ link, pathname, label }: SidebarLinkProps) {
+	return (
+		<SidebarMenuItem
+			className={cn("ml-4", pathname === link && "text-purple-500")}
+		>
+			<Link href={link}>
+				<SidebarMenuButton
+					className={cn(pathname === link && "hover:text-purple-500")}
+				>
+					{label}
+				</SidebarMenuButton>
+			</Link>
+		</SidebarMenuItem>
+	);
+}
+
+export default function SidebarLeagueLinks({
+	league,
+}: SidebarLeagueLinksProps) {
 	const pathname = usePathname();
 	const league_key = league.league_key;
 	return (
@@ -23,56 +47,26 @@ export default function SidebarLeagueLinks({ league }: SidebarLeagueProps) {
 					</SidebarMenuButton>
 				</Link>
 			</SidebarMenuItem>
-			<SidebarMenuItem
-				className={cn(
-					"ml-4",
-					pathname === `/fantasy/${league_key}` && "text-purple-500",
-				)}
-			>
-				<Link href={`/fantasy/${league_key}`}>
-					<SidebarMenuButton
-						className={cn(
-							pathname === `/fantasy/${league_key}` && "hover:text-purple-500",
-						)}
-					>
-						Standings
-					</SidebarMenuButton>
-				</Link>
-			</SidebarMenuItem>
-			<SidebarMenuItem
-				className={cn(
-					"ml-4",
-					pathname === `/fantasy/${league_key}/stats` && "text-purple-500",
-				)}
-			>
-				<Link href={`/fantasy/${league_key}/stats`}>
-					<SidebarMenuButton
-						className={cn(
-							pathname === `/fantasy/${league_key}/stats` &&
-								"hover:text-purple-500",
-						)}
-					>
-						Stats
-					</SidebarMenuButton>
-				</Link>
-			</SidebarMenuItem>
-			<SidebarMenuItem
-				className={cn(
-					"ml-4",
-					pathname === `/fantasy/${league_key}/teams` && "text-purple-500",
-				)}
-			>
-				<Link href={`/fantasy/${league_key}/teams`}>
-					<SidebarMenuButton
-						className={cn(
-							pathname === `/fantasy/${league_key}/teams` &&
-								"hover:text-purple-500",
-						)}
-					>
-						Teams
-					</SidebarMenuButton>
-				</Link>
-			</SidebarMenuItem>
+			<SidebarLink
+				label={"Overview"}
+				link={`/fantasy/${league_key}/overview`}
+				pathname={pathname}
+			/>
+			<SidebarLink
+				label={"Standings"}
+				link={`/fantasy/${league_key}`}
+				pathname={pathname}
+			/>
+			<SidebarLink
+				label={"Stats"}
+				link={`/fantasy/${league_key}/stats`}
+				pathname={pathname}
+			/>
+			<SidebarLink
+				label={"Teams"}
+				link={`/fantasy/${league_key}/teams`}
+				pathname={pathname}
+			/>
 		</>
 	);
 }

@@ -118,17 +118,7 @@ export type YahooLeagueSettings = {
 			count: number;
 			is_starting_position: number;
 		}>;
-		stat_categories: Array<{
-			stat_id: number;
-			enabled: string;
-			name: string;
-			display_name: string;
-			group: string;
-			abbr: string;
-			sort_order: string;
-			position_type: string;
-			stat_position_types: string[];
-		}>;
+		stat_categories: Array<YahooSettingsStatCategory>;
 		max_weekly_adds: string;
 		uses_median_score: boolean;
 		league_premium_features: [];
@@ -356,7 +346,28 @@ export type YahooUserGameTeam = {
 };
 
 export type FantasyStats = {
-	team_id: number;
+	team_id: string;
 	team: string;
 	[key: string]: string;
+};
+
+export type DBFantasyStats = {
+	league_key: string;
+	team_id: string;
+	name: string;
+	week: number;
+	stats: { value: string; stat_id: string }[];
+};
+
+export type YahooSettingsStatCategory = {
+	stat_id: number;
+	enabled: string;
+	name: string;
+	display_name: string;
+	group: string;
+	abbr: string;
+	sort_order: string;
+	position_type: string;
+	stat_position_types: string[];
+	is_only_display_stat: string;
 };
