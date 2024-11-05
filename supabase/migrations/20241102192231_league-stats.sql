@@ -6,6 +6,7 @@ CREATE TABLE
     num_teams INTEGER NULL,
     game TEXT NULL,
     url TEXT NULL,
+    stat_categoreis jsonb NULL,
     CONSTRAINT leagues_pkey PRIMARY KEY (league_key)
   ) TABLESPACE pg_default;
 ALTER TABLE public.leagues ENABLE ROW LEVEL SECURITY;
@@ -65,8 +66,8 @@ for update to authenticated using (
 CREATE TABLE
   public.league_stats (
     league_key TEXT NOT NULL,
-    team_id TEXT NOT NULL,
-    NAME TEXT NULL,
+    team_id text NOT NULL,
+    name text NULL,
     week INTEGER NOT NULL,
     stats jsonb NULL,
     CONSTRAINT league_stats_pkey PRIMARY KEY (league_key, team_id, week),

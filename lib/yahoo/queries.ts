@@ -31,6 +31,17 @@ export const getUserLeagues = async (supabase: SupabaseClient<Database>) => {
 	return data;
 };
 
+export const getLeagueCurrentWeek = async (
+	supabase: SupabaseClient<Database>,
+	league_key: string,
+) => {
+	const { data } = await supabase
+		.from("leagues")
+		.select("stat_categories")
+		.eq("league_key", league_key)
+		.single();
+};
+
 export const getLeagueStatCategories = async (
 	supabase: SupabaseClient<Database>,
 	league_key: string,

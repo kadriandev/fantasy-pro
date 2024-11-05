@@ -8,7 +8,7 @@ import {
 	getWeekStats,
 	updateWeekStats,
 } from "@/lib/yahoo/queries";
-import { YahooLeagueSettings, YahooUserGameTeams } from "@/lib/yahoo/types";
+import { YahooLeagueSettings } from "@/lib/yahoo/types";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import {
 	createSearchParamsCache,
@@ -53,7 +53,6 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 	}
 
 	const columns = createStatTableColumns(settings);
-
 	const weeks: string[] = Array.from(
 		{ length: +settings.current_week },
 		(_, i) => i + 1 + "",
@@ -68,7 +67,7 @@ export default async function StatsPage({ params, searchParams }: PageProps) {
 				</span>
 			</h1>
 			<ScrollArea className="h-[900px]">
-				<DataTable teamId={team_id?.team_id} columns={columns} data={stats} />
+				<DataTable teamId={team_id!.team_id!} columns={columns} data={stats} />
 			</ScrollArea>
 		</>
 	);

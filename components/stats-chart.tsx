@@ -35,18 +35,18 @@ export interface StatsChartProps {
 }
 
 export function StatsChart({ name, data, desc }: StatsChartProps) {
-	const statIsPercent = data[0].league < 1 && data[0].league > 0;
+	const isPercent = data[0].user.startsWith(".");
 	return (
 		<Card>
 			<CardHeader>
 				<CardTitle>{name}</CardTitle>
 				{desc && <CardDescription>{desc}</CardDescription>}
 			</CardHeader>
-			<CardContent className="p-4">
+			<CardContent className="px-4">
 				<ChartContainer config={chartConfig}>
 					<LineChart
-						width={10}
-						height={5}
+						width={20}
+						height={20}
 						accessibilityLayer
 						data={data}
 						margin={{
@@ -58,14 +58,17 @@ export function StatsChart({ name, data, desc }: StatsChartProps) {
 						<YAxis
 							type="number"
 							hide
-							// domain={
-							// 	statIsPercent
-							// 		? [data[0].league - 0.1, data[0].league + 0.1]
-							// 		: [
-							// 				Math.floor(data[0].league - data[0].league * 0.5),
-							// 				Math.ceil(data[0].league + data[0].league * 0.5),
-							// 			]
-							// }
+							domain={
+								isPercent
+									? [
+											data[0].league - data[0].league * 0.15,
+											data[0].league + data[0].league * 0.25,
+										]
+									: [
+											Math.floor(data[0].league - data[0].league * 0.75),
+											Math.ceil(data[0].league + data[0].league * 0.75),
+										]
+							}
 						/>
 						<XAxis
 							dataKey="week"

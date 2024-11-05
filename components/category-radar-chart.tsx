@@ -1,19 +1,11 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import {
-	PolarAngleAxis,
-	PolarGrid,
-	PolarRadiusAxis,
-	Radar,
-	RadarChart,
-} from "recharts";
+import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 
 import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -42,8 +34,9 @@ const chartConfig = {
 export function CategoryRadarChart({ data }: CategoryRadarChartProps) {
 	return (
 		<Card>
-			<CardHeader className="items-center pb-4">
+			<CardHeader>
 				<CardTitle>Team Profile</CardTitle>
+				<CardDescription>Team Build (Last 2 weeks)</CardDescription>
 			</CardHeader>
 			<CardContent className="pb-0">
 				<ChartContainer
@@ -59,19 +52,19 @@ export function CategoryRadarChart({ data }: CategoryRadarChartProps) {
 						<PolarAngleAxis dataKey="stat" />
 						<PolarGrid radialLines={false} />
 						<Radar
-							name="Last Week"
-							dataKey="thisWeek"
-							fill="var(--color-desktop)"
-							fillOpacity={0}
-							stroke="var(--color-desktop)"
-							strokeWidth={2}
-						/>
-						<Radar
 							name="2 Weeks Ago"
 							dataKey="lastWeek"
 							fill="var(--color-mobile)"
-							fillOpacity={0}
+							fillOpacity={0.4}
 							stroke="var(--color-mobile)"
+							strokeWidth={2}
+						/>
+						<Radar
+							name="Last Week"
+							dataKey="thisWeek"
+							fill="var(--color-desktop)"
+							fillOpacity={0.4}
+							stroke="var(--color-desktop)"
 							strokeWidth={2}
 						/>
 					</RadarChart>
