@@ -27,6 +27,7 @@ export type YahooLeagueScoreboard = {
 	game_code: string;
 	season: string;
 	scoreboard: {
+		week: string;
 		matchups: Array<{
 			week: string;
 			week_start: string;
@@ -134,7 +135,7 @@ export type YahooLeagueSettings = {
 	};
 };
 
-export type YahooGameLeagues = {
+export type YahooUserGameLeagues = {
 	guid: string;
 	games: [
 		{
@@ -301,6 +302,23 @@ export type YahooTeamRoster = {
 	roster: YahooPlayer[];
 };
 
+export type YahooUserGames = {
+	guid: string;
+	games: Array<{
+		game_key: string;
+		game_id: string;
+		name: string;
+		code: string;
+		type: string;
+		url: string;
+		season: string;
+		is_registration_over: boolean;
+		is_game_over: boolean;
+		is_offseason: boolean;
+		is_live_draft_lobby_active: boolean;
+	}>;
+};
+
 export type YahooUserGameTeams = {
 	guid: string;
 	teams: Array<{
@@ -335,4 +353,10 @@ export type YahooUserGameTeam = {
 			image_url: string;
 		},
 	];
+};
+
+export type FantasyStats = {
+	team_id: number;
+	team: string;
+	[key: string]: string;
 };

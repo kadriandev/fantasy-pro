@@ -6,6 +6,7 @@ import {
 	getCoreRowModel,
 	flexRender,
 	SortingState,
+	VisibilityState,
 	getSortedRowModel,
 } from "@tanstack/react-table";
 import {
@@ -18,21 +19,23 @@ import {
 } from "./ui/table";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { YahooUserGameTeam } from "@/lib/yahoo/types";
 import { ArrowDown, ArrowUp } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
-	team: YahooUserGameTeam;
+	teamId: string;
 }
 
 export default function DataTable<TData, TValue>({
 	columns,
 	data,
-	team,
+	teamId,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+		team_id: false,
+	});
 
 	const table = useReactTable({
 		data,
@@ -43,6 +46,7 @@ export default function DataTable<TData, TValue>({
 		enableSortingRemoval: false,
 		state: {
 			sorting,
+			columnVisibility,
 		},
 	});
 
@@ -85,7 +89,7 @@ export default function DataTable<TData, TValue>({
 								key={row.id}
 								data-state={row.getIsSelected() && "selected"}
 								className={cn(
-									row.getValue("team") === team.name && "bg-purple-700",
+									row.getValue("team_id") === teamId && "bg-purple-700",
 								)}
 							>
 								{row.getVisibleCells().map((cell) => (
