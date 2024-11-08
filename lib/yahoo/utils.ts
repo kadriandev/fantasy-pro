@@ -21,18 +21,15 @@ export const getStatMapper = async (
 	return statMapper;
 };
 
-export const getWeekStatsFromYahoo = async (
+export const getCurrentWeekStats = async (
 	league_key: string,
-	week?: string,
 ): Promise<Array<FantasyStats>> => {
 	const yf = await createYahooClient();
 
-	const scoreboard: YahooLeagueScoreboard = await yf.league.scoreboard(
-		league_key,
-		week,
-	);
+	const scoreboard: YahooLeagueScoreboard =
+		await yf.league.scoreboard(league_key);
 
-	const stats = scoreboard.scoreboard.matchups
+	return scoreboard.scoreboard.matchups
 		.reduce((acc: any[], curr: any) => {
 			acc.push(curr.teams);
 			return acc;
@@ -48,13 +45,16 @@ export const getWeekStatsFromYahoo = async (
 			});
 			return res;
 		});
-	return stats;
 };
 
-export const groupStatsByWeek = (data: any[]): Array<Array<DBFantasyStats>> => {
-	return data?.reduce((acc, curr) => {
-		if (!acc[curr.week - 1]) acc[curr.week - 1] = [];
-		acc[curr.week - 1].push(curr);
-		return acc;
-	}, []);
+export const groupStatsByWeek = (
+	data: Array<DBFantasyStats>,
+): Array<Array<DBFantasyStats>> => {
+	return data
+		.reduce((acc: Array<Array<DBFantasyStats>>, curr) => {
+			if (!acc[curr.week - 1]) acc[curr.week - 1] = [];
+			acc[curr.week - 1].push(curr);
+			return acc;
+		}, [])
+		.reverse();
 };

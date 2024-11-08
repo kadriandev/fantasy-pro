@@ -36,19 +36,19 @@ export async function AppSidebar() {
 				<Link href="/fantasy">Fantasy Pro</Link>
 			</SidebarHeader>
 			<SidebarContent>
-				<SidebarGroup>
-					<SidebarGroupLabel className="text-lg">Leagues</SidebarGroupLabel>
-					<SidebarGroupContent>
-						<SidebarMenu>
-							{subscription &&
-								leagues?.map((l) => (
+				{subscription && leagues?.length ? (
+					<SidebarGroup>
+						<SidebarGroupLabel className="text-lg">Leagues</SidebarGroupLabel>
+						<SidebarGroupContent>
+							<SidebarMenu>
+								{leagues?.map((l) => (
 									<Collapsible defaultOpen className="group/collapsible">
 										<SidebarGroup>
 											<SidebarGroupLabel>
 												<CollapsibleTrigger className="flex gap-2 items-center">
-													{l.type === "nba" ? (
+													{l.game === "nba" ? (
 														<Icon iconNode={basketball} />
-													) : l.type === "nfl" ? (
+													) : l.game === "nfl" ? (
 														<Icon iconNode={football} />
 													) : (
 														<Icon iconNode={baseball} />
@@ -65,9 +65,10 @@ export async function AppSidebar() {
 										</SidebarGroup>
 									</Collapsible>
 								))}
-						</SidebarMenu>
-					</SidebarGroupContent>
-				</SidebarGroup>
+							</SidebarMenu>
+						</SidebarGroupContent>
+					</SidebarGroup>
+				) : null}
 			</SidebarContent>
 			<SidebarFooter className="mb-8">
 				<SidebarGroup>

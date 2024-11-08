@@ -1,52 +1,38 @@
-import { SupabaseClient } from "@supabase/supabase-js";
-import {
+import type { SupabaseClient as SBClient } from "@supabase/supabase-js";
+import type { Database } from "../supabase/types";
+import type {
 	DBFantasyStats,
 	FantasyStats,
 	YahooLeagueScoreboard,
 	YahooSettingsStatCategory,
 } from "./types";
-import { createServiceClient } from "../supabase/server";
+import { createClient, createServiceClient } from "../supabase/server";
 import { createYahooClient } from ".";
-import {
-	getStatMapper,
-	getWeekStatsFromYahoo,
-	groupStatsByWeek,
-} from "./utils";
-import { Database } from "../supabase/types";
+import { getStatMapper } from "./utils";
 
-export const getUsersTeamId = async (
-	supabase: SupabaseClient<Database>,
-	league_key: string,
-) => {
-	const { data } = await supabase
+type SupabaseClient = SBClient<Database>;
+
+export const getUsersTeamId = async (league_key: string) => {
+	const supabase = createClient();
+	return supabase
 		.from("user_leagues")
 		.select("team_id")
 		.eq("league_key", league_key)
-		.single();
-	return data;
+		.single()
+		.then((data) => data.data?.team_id);
 };
 
-export const getUserLeagues = async (supabase: SupabaseClient<Database>) => {
+export const getUserLeagues = async () => {
+	const supabase = createClient();
 	const { data } = await supabase.from("leagues").select();
 	return data;
 };
 
-export const getLeagueCurrentWeek = (
-	supabase: SupabaseClient<Database>,
-	league_key: string,
-) => {
-	return supabase
-		.from("leagues")
-		.select("stat_categories")
-		.eq("league_key", league_key)
-		.single();
-};
-
 export const getLeagueStatCategories = async (
-	supabase: SupabaseClient<Database>,
 	league_key: string,
 	options?: { hide_display_only: boolean },
 ) => {
+	const supabase = createClient();
 	const { data } = await supabase
 		.from("leagues")
 		.select("stat_categories")
@@ -61,7 +47,6 @@ export const getLeagueStatCategories = async (
 };
 
 export const insertUserLeagues = async (
-	supabase: SupabaseClient<Database>,
 	leagues: {
 		league_key: string;
 		name: string;
@@ -72,13 +57,14 @@ export const insertUserLeagues = async (
 	}[],
 	user_leagues: { league_key: string; team_id: string }[],
 ) => {
+	const supabase = createClient();
 	const service_client = createServiceClient();
 	await service_client.from("leagues").upsert(leagues);
 	await supabase.from("user_leagues").upsert(user_leagues);
 };
 
 export const getLeagueStats = async (
-	supabase: SupabaseClient<Database>,
+	supabase: SupabaseClient,
 	league_key: string,
 ): Promise<Array<FantasyStats>> => {
 	const statMapper = await getStatMapper(supabase, league_key);
@@ -102,112 +88,6 @@ export const getLeagueStats = async (
 	return stats!;
 };
 
-export const getStatChartData = async (
-	supabase: SupabaseClient<Database>,
-	league_key: string,
-	stat_id: string,
-) => {
-	const [userTeamId, data] = await Promise.all([
-		getUsersTeamId(supabase, league_key),
-		supabase.from("league_stats").select("*").eq("league_key", league_key),
-	]);
-	const statData = groupStatsByWeek(data.data ?? []);
-
-	const res = statData!.map((week, i) => {
-		let week_stat_data = week
-			.filter((w) => w.team_id !== userTeamId?.team_id?.toString())
-			.reduce((acc, curr) => {
-				const stat = (
-					curr.stats as Array<{
-						stat_id: string;
-						value: string;
-					}>
-				).find((s) => s.stat_id === stat_id)!.value;
-				return acc + parseFloat(stat);
-			}, 0.0);
-		let user_stat = week
-			.filter((w) => w.team_id === userTeamId?.team_id?.toString())[0]
-			.stats.find((s) => s.stat_id === stat_id)!.value;
-
-		return {
-			week: i + 1,
-			user: user_stat,
-			league: week_stat_data / week.length,
-		};
-	});
-	return res;
-};
-
-export const getRadarChartData = async (
-	supabase: SupabaseClient<Database>,
-	league_key: string,
-	currentWeek: number,
-) => {
-	const [userTeamId, cats, data] = await Promise.all([
-		getUsersTeamId(supabase, league_key),
-		getLeagueStatCategories(supabase, league_key, {
-			hide_display_only: true,
-		}),
-		supabase
-			.from("league_stats")
-			.select("*")
-			.eq("league_key", league_key)
-			.gte("week", currentWeek - 2),
-	]);
-	const statData = groupStatsByWeek(data.data ?? []);
-
-	const statValue = (team: DBFantasyStats, cat: YahooSettingsStatCategory) =>
-		parseFloat(
-			team.stats.find((s) => s.stat_id === cat.stat_id.toString())!.value,
-		);
-
-	return cats.map(function (c) {
-		const sortStat = (a: DBFantasyStats, b: DBFantasyStats) =>
-			c.sort_order === "1"
-				? statValue(a, c) - statValue(b, c)
-				: statValue(b, c) - statValue(a, c);
-
-		let lastWeek = [...statData[0]].sort(sortStat);
-		let thisWeek = [...statData[1]].sort(sortStat);
-
-		return {
-			stat: c.abbr,
-			lastWeek:
-				lastWeek.map((t) => t.team_id).indexOf(userTeamId!.team_id!) + 1,
-			thisWeek:
-				thisWeek.map((t) => t.team_id).indexOf(userTeamId!.team_id!) + 1,
-		};
-	});
-};
-
-export const getWeekStats = async (
-	supabase: SupabaseClient<Database>,
-	league_key: string,
-	week: string,
-): Promise<Array<FantasyStats>> => {
-	if (week) {
-		const { data } = await supabase
-			.from("league_stats")
-			.select("*")
-			.eq("league_key", league_key)
-			.eq("week", week);
-
-		const stats = data?.map((t) => {
-			const res: FantasyStats = {
-				team_id: t.team_id,
-				team: t.name!,
-			};
-			(t.stats as Array<DBFantasyStats>).forEach(
-				(s: any) => (res[s.stat_id] = s.value),
-			);
-			return res;
-		});
-		return stats!;
-	} else {
-		return getWeekStatsFromYahoo(league_key, week);
-	}
-};
-
 export const updateWeekStats = async (league_key: string, week: string) => {
 	const supabase = createServiceClient();
 	const yf = createYahooClient();
@@ -220,7 +100,7 @@ export const updateWeekStats = async (league_key: string, week: string) => {
 	const teams = scoreboard.scoreboard.matchups.flatMap((m) => m.teams);
 	const stats = teams.map((t) => ({
 		league_key,
-		week,
+		week: +week,
 		team_id: t.team_id,
 		name: t.name,
 		stats: t.stats,
@@ -235,4 +115,64 @@ export const updateWeekStats = async (league_key: string, week: string) => {
 	if (count != null && count < stats.length) {
 		await supabase.from("league_stats").upsert(stats);
 	}
+};
+
+export const fetchAndSaveLeagueStats = async (league_key: string) => {
+	const supabase = createClient();
+	const yf = createYahooClient();
+
+	const [settings, data] = await Promise.all([
+		yf.league.settings(league_key),
+		supabase
+			.from("league_stats")
+			.select("week")
+			.eq("league_key", league_key)
+			.order("week", { ascending: false })
+			.limit(1)
+			.maybeSingle(),
+	]);
+
+	// Save last week if it doesnt exist
+	const unsavedWeeks = settings.current_week - (data.data?.week ?? 0) - 1;
+	if (data.data === null || unsavedWeeks) {
+		const weeksToFetch = Array(unsavedWeeks)
+			.fill(unsavedWeeks)
+			.map((x) => x + 1)
+			.join(",");
+		const scoreboard: YahooLeagueScoreboard = await yf.league.scoreboard(
+			league_key,
+			weeksToFetch,
+		);
+
+		const teams = scoreboard.scoreboard.matchups.flatMap((m) => m.teams);
+		const stats = teams.map((t) => ({
+			league_key,
+			week: +t.points.week,
+			team_id: t.team_id,
+			name: t.name,
+			stats: t.stats,
+		}));
+
+		await supabase.from("league_stats").insert(stats);
+	}
+
+	const [cats, stats] = await Promise.all([
+		supabase
+			.from("leagues")
+			.select("stat_categories")
+			.eq("league_key", league_key)
+			.single()
+			.then((res) => res.data?.stat_categories),
+		supabase
+			.from("league_stats")
+			.select("*")
+			.eq("league_key", league_key)
+			.then((res) => res.data),
+	]);
+
+	return {
+		current_week: settings.current_week as number,
+		cats: cats as YahooSettingsStatCategory[],
+		stats: stats as DBFantasyStats[],
+	};
 };

@@ -1,7 +1,9 @@
-import { FantasyStats, YahooLeagueSettings } from "@/lib/yahoo/types";
+import { FantasyStats, YahooSettingsStatCategory } from "@/lib/yahoo/types";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const createStatTableColumns = (settings: YahooLeagueSettings) => {
+export const createStatTableColumns = (
+	categories: YahooSettingsStatCategory[],
+) => {
 	const columns: ColumnDef<FantasyStats>[] = [
 		{
 			header: "Team ID",
@@ -13,7 +15,7 @@ export const createStatTableColumns = (settings: YahooLeagueSettings) => {
 	];
 
 	columns.push(
-		...settings.settings.stat_categories.map(
+		...categories.map(
 			(cat): ColumnDef<FantasyStats> => ({
 				header: cat.abbr,
 				accessorKey: cat.stat_id + "",

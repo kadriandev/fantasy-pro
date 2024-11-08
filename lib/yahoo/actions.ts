@@ -64,7 +64,7 @@ export async function fetchUserLeagues() {
 		});
 		if (!user_leagues) return;
 
-		await insertUserLeagues(supabase, leagues, user_leagues);
+		await insertUserLeagues(leagues, user_leagues);
 	}
 	revalidatePath("/fantasy");
 }

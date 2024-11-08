@@ -4,9 +4,10 @@
     "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "start:db": "supabase start",
-    "stop:db": "supabase stop",
-    "generate:db-types": "npx supabase gen types --lang=typescript --project-id='lrgrsnfuncsijmnnbfbp' --schema public > lib/supabase/types.ts"
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:types": "npx supabase gen types --lang=typescript --local > lib/supabase/types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

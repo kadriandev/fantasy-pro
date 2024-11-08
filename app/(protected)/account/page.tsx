@@ -1,10 +1,8 @@
 import CustomerPortalForm from "@/components/customer-portal-form";
 import { getSubscription } from "@/lib/supabase/queries";
-import { createClient } from "@/lib/supabase/server";
 
 export default async function Account() {
-	const supabase = createClient();
-	const subscription = await getSubscription(supabase);
+	const subscription = await getSubscription();
 
 	return (
 		<section className="mb-32">

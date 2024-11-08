@@ -7,14 +7,13 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/server";
+import { fetchUserLeagues } from "@/lib/yahoo/actions";
 import { getUserLeagues } from "@/lib/yahoo/queries";
 import Link from "next/link";
 
 export default async function Page() {
-	const supabase = createClient();
-
-	const leagues = await getUserLeagues(supabase);
+	const leagues = await getUserLeagues();
+	if (!leagues?.length) await fetchUserLeagues();
 
 	if (!leagues)
 		return (
@@ -41,9 +40,11 @@ export default async function Page() {
 						</CardHeader>
 						{/* <CardContent></CardContent> */}
 						<CardFooter className="flex gap-4">
-							<Link href={l.url} className="flex text-xs items-center">
-								<Button variant="outline">Go to Yahoo</Button>
-							</Link>
+							{l.url && (
+								<Link href={l.url} className="flex text-xs items-center">
+									<Button variant="outline">Go to Yahoo</Button>
+								</Link>
+							)}
 							<Link href={`/fantasy/${l.league_key}`}>
 								<Button variant="default">Go to League</Button>
 							</Link>
