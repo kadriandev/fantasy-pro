@@ -5,7 +5,7 @@ import { useState } from "react";
 import { createStripePortal } from "@/lib/stripe/server";
 import Link from "next/link";
 import { Tables } from "@/lib/supabase/types";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 type Subscription = Tables<"subscriptions">;
 type Price = Tables<"prices">;

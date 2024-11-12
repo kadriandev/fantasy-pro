@@ -264,18 +264,24 @@ export type Database = {
       }
       user_leagues: {
         Row: {
+          last_insight: string | null
           league_key: string
           team_id: string | null
+          team_insights: Json | null
           user_id: string
         }
         Insert: {
+          last_insight?: string | null
           league_key: string
           team_id?: string | null
+          team_insights?: Json | null
           user_id?: string
         }
         Update: {
+          last_insight?: string | null
           league_key?: string
           team_id?: string | null
+          team_insights?: Json | null
           user_id?: string
         }
         Relationships: [

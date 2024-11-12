@@ -21,7 +21,7 @@ export const createStatTableColumns = (
 				accessorKey: cat.stat_id + "",
 				sortingFn: "alphanumeric",
 				enableSorting: true,
-				sortDescFirst: true,
+				sortDescFirst: cat.sort_order === "1",
 			}),
 		),
 	);

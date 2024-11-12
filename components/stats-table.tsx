@@ -75,7 +75,7 @@ export default function StatsTable({
 					</Select>
 				</span>
 			</h1>
-			<ScrollArea className="h-[900px]">
+			<ScrollArea className="h-[500px]">
 				<DataTable teamId={userTeamId!} columns={columns} data={data} />
 			</ScrollArea>
 		</>

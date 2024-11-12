@@ -1,4 +1,4 @@
-import CustomerPortalForm from "@/components/customer-portal-form";
+import CustomerPortalForm from "@/components/payments/customer-portal-form";
 import { getSubscription } from "@/lib/supabase/queries";
 
 export default async function Account() {

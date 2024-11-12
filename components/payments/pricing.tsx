@@ -6,7 +6,7 @@ import { getErrorRedirect } from "@/lib/utils";
 import { User } from "@supabase/supabase-js";
 import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import getStripe from "@/lib/stripe/get-stripe";
 
 type Subscription = Tables<"subscriptions">;

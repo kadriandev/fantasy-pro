@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { ThemeSwitcher } from "./theme-switcher";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { BarChart2 } from "lucide-react";
 
 export default async function Navbar() {

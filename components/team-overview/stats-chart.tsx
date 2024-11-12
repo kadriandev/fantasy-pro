@@ -6,7 +6,6 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -17,25 +16,35 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartConfig = {
-	user: {
-		label: "You",
-		color: "hsl(var(--chart-1))",
-	},
-	league: {
-		label: "League Avg.",
-		color: "hsl(var(--chart-2))",
-	},
-} satisfies ChartConfig;
-
 export interface StatsChartProps {
 	name: string;
 	data: any[];
+	comparisonLabel: string;
 	desc?: string;
 }
 
-export function StatsChart({ name, data, desc }: StatsChartProps) {
+export function StatsChart({
+	name,
+	data,
+	desc,
+	comparisonLabel,
+}: StatsChartProps) {
+	const chartConfig = {
+		user: {
+			label: "You",
+			color: "hsl(var(--chart-1))",
+		},
+		comparison: {
+			label: comparisonLabel,
+			color: "hsl(var(--chart-2))",
+		},
+	} satisfies ChartConfig;
+
 	const isPercent = data[0].user.startsWith(".");
+	const min = Math.min(...data.map((x) => Math.min(x.user, x.comparison)));
+	const max = Math.max(...data.map((x) => Math.max(x.user, x.comparison)));
+	const buffer = isPercent ? 0.1 : 15;
+
 	return (
 		<Card>
 			<CardHeader>
@@ -55,21 +64,7 @@ export function StatsChart({ name, data, desc }: StatsChartProps) {
 						}}
 					>
 						<CartesianGrid vertical={false} />
-						<YAxis
-							type="number"
-							hide
-							domain={
-								isPercent
-									? [
-											data[0].league - data[0].league * 0.15,
-											data[0].league + data[0].league * 0.25,
-										]
-									: [
-											Math.floor(data[0].league - data[0].league * 0.75),
-											Math.ceil(data[0].league + data[0].league * 0.75),
-										]
-							}
-						/>
+						<YAxis type="number" hide domain={[min - buffer, max + buffer]} />
 						<XAxis
 							dataKey="week"
 							tickLine={true}
@@ -86,9 +81,9 @@ export function StatsChart({ name, data, desc }: StatsChartProps) {
 							dot={true}
 						/>
 						<Line
-							dataKey="league"
+							dataKey="comparison"
 							type="natural"
-							stroke="var(--color-league)"
+							stroke="var(--color-comparison)"
 							strokeWidth={2}
 							dot={true}
 							strokeDasharray={"10 10 10"}

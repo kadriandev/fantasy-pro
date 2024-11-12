@@ -2,13 +2,7 @@
 
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	ChartConfig,
 	ChartContainer,
@@ -16,29 +10,32 @@ import {
 	ChartTooltipContent,
 } from "@/components/ui/chart";
 
-interface CategoryRadarChartProps {
-	data: { stat: string; lastWeek: number; thisWeek: number }[];
-}
-
 const chartConfig = {
-	desktop: {
-		label: "Desktop",
+	user: {
+		label: "User Team",
 		color: "hsl(var(--chart-1))",
 	},
-	mobile: {
-		label: "Mobile",
+	comparison: {
+		label: "Comparison",
 		color: "hsl(var(--chart-2))",
 	},
 } satisfies ChartConfig;
 
-export function CategoryRadarChart({ data }: CategoryRadarChartProps) {
+interface CategoryRadarChartProps {
+	data: { stat: string; userTeam: number; compareTeam: number }[];
+	comparison?: string;
+}
+
+export function CategoryRadarChart({
+	data,
+	comparison,
+}: CategoryRadarChartProps) {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Team Profile</CardTitle>
-				<CardDescription>Team Build (Last 2 weeks)</CardDescription>
+				<CardTitle>Profile</CardTitle>
 			</CardHeader>
-			<CardContent className="pb-0">
+			<CardContent className="m-2 p-0">
 				<ChartContainer
 					config={chartConfig}
 					className="mx-auto aspect-square max-h-[250px]"
@@ -52,21 +49,24 @@ export function CategoryRadarChart({ data }: CategoryRadarChartProps) {
 						<PolarAngleAxis dataKey="stat" />
 						<PolarGrid radialLines={false} />
 						<Radar
-							name="2 Weeks Ago"
-							dataKey="lastWeek"
-							fill="var(--color-mobile)"
+							name="Your Team"
+							dataKey="userTeam"
+							fill="var(--color-user)"
 							fillOpacity={0.4}
-							stroke="var(--color-mobile)"
+							stroke="var(--color-user)"
 							strokeWidth={2}
+							z={1000}
 						/>
-						<Radar
-							name="Last Week"
-							dataKey="thisWeek"
-							fill="var(--color-desktop)"
-							fillOpacity={0.4}
-							stroke="var(--color-desktop)"
-							strokeWidth={2}
-						/>
+						{comparison && (
+							<Radar
+								name={comparison === "league" ? "Last Week" : comparison}
+								dataKey="compareTeam"
+								fill="var(--color-comparison)"
+								fillOpacity={0.4}
+								stroke="var(--color-comparison)"
+								strokeWidth={2}
+							/>
+						)}
 					</RadarChart>
 				</ChartContainer>
 			</CardContent>

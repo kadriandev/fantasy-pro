@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { SidebarMenuItem, SidebarMenuButton } from "./ui/sidebar";
+import { SidebarMenuItem, SidebarMenuButton } from "../ui/sidebar";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { YahooGameLeague } from "@/lib/yahoo/types";
@@ -49,22 +49,17 @@ export default function SidebarLeagueLinks({
 			</SidebarMenuItem>
 			<SidebarLink
 				label={"Overview"}
-				link={`/fantasy/${league_key}/overview`}
+				link={`/fantasy/${league_key}`}
 				pathname={pathname}
 			/>
 			<SidebarLink
 				label={"Standings"}
-				link={`/fantasy/${league_key}`}
+				link={`/fantasy/${league_key}/standings`}
 				pathname={pathname}
 			/>
 			<SidebarLink
 				label={"Stats"}
 				link={`/fantasy/${league_key}/stats`}
-				pathname={pathname}
-			/>
-			<SidebarLink
-				label={"Teams"}
-				link={`/fantasy/${league_key}/teams`}
 				pathname={pathname}
 			/>
 		</>

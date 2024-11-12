@@ -1,4 +1,4 @@
-import Pricing from "@/components/pricing";
+import Pricing from "@/components/payments/pricing";
 import { getUser, getProducts, getSubscription } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
 

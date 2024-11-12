@@ -6,13 +6,19 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const signUpAction = async (formData: FormData) => {
+	const first = formData.get("first_name")?.toString();
+	const last = formData.get("last_name")?.toString();
 	const email = formData.get("email")?.toString();
 	const password = formData.get("password")?.toString();
+	const confirm_password = formData.get("confirm_password")?.toString();
+
 	const supabase = createClient();
 	const origin = headers().get("origin");
 
-	if (!email || !password) {
-		return { error: "Email and password are required" };
+	if (!first || !last || !email || !password || !confirm_password) {
+		return { error: "Missing required fields." };
+	} else if (password !== confirm_password) {
+		return { error: "Passwords do not match." };
 	}
 
 	const { error } = await supabase.auth.signUp({
@@ -22,6 +28,7 @@ export const signUpAction = async (formData: FormData) => {
 			emailRedirectTo: `${origin}/auth/callback`,
 		},
 	});
+	await supabase.from("users").update({ first_name: first, last_name: last });
 
 	if (error) {
 		console.error(error.code + " " + error.message);
