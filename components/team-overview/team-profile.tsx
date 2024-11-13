@@ -125,7 +125,7 @@ export default function TeamProfile({ data, insights }: TeamProfileProps) {
 					</div>
 				</CardContent>
 			</Card>
-			<Card>
+			<Card className="col-span-2 md:col-span-1">
 				<CardHeader>
 					<CardTitle>AI Trade Insights</CardTitle>
 					<CardDescription>
@@ -163,7 +163,7 @@ export default function TeamProfile({ data, insights }: TeamProfileProps) {
 					</ul>
 				</CardContent>
 			</Card>
-			<Card>
+			<Card className="col-span-2 md:col-span-1">
 				<CardHeader>
 					<CardTitle>Adds / Drops</CardTitle>
 					<CardDescription>

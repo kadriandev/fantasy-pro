@@ -90,7 +90,7 @@ export default function DataTable<TData, TValue>({
 								data-state={row.getIsSelected() && "selected"}
 								className={cn(
 									row.getValue("team_id") === teamId &&
-										"bg-purple-300 dark:bg-purple-700",
+										"bg-primary dark:bg-primary",
 								)}
 							>
 								{row.getVisibleCells().map((cell) => (

@@ -2,7 +2,7 @@ import { fetchAndSaveLeagueStats, getUsersTeamId } from "@/lib/yahoo/queries";
 import { groupStatsByWeek } from "@/lib/yahoo/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { processRadarChartData } from "@/components/team-overview/utils";
-import TeamGraphs from "@/components/team-overview/team-overview";
+import TeamGraphs from "@/components/team-overview/team-graphs";
 import TeamProfile from "@/components/team-overview/team-profile";
 import { getInsights } from "@/lib/ai/queries";
 
