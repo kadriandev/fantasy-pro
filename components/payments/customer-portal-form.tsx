@@ -47,7 +47,7 @@ export default function CustomerPortalForm({ subscription }: Props) {
 		<div className="p m-auto my-8 w-full max-w-3xl rounded-md border border-zinc-700">
 			<div className="px-5 py-4">
 				<h3 className="mb-1 text-2xl font-medium">Your Plan</h3>
-				<p className="text-zinc-300">
+				<p className="text-black dark:text-white">
 					{subscription
 						? `You are currently on the ${subscription?.prices?.products?.name} plan.`
 						: "You are not currently subscribed to any plan."}
@@ -58,7 +58,7 @@ export default function CustomerPortalForm({ subscription }: Props) {
 				</div>
 			</div>
 
-			<div className="rounded-b-md border-t border-zinc-700 bg-zinc-900 p-4 text-zinc-500">
+			<div className="rounded-b-md border-t border-zinc-900 bg-zinc-900 p-4 text-zinc-500">
 				<div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
 					{subscription ? (
 						<>

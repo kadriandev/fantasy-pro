@@ -1,4 +1,4 @@
-import { ChevronDown, Icon, Menu } from "lucide-react";
+import { BarChart2, ChevronDown, Icon, Menu } from "lucide-react";
 import { baseball, basketball, football } from "@lucide/lab";
 
 import {
@@ -32,8 +32,11 @@ export async function AppSidebar() {
 	return (
 		<>
 			<Sidebar>
-				<SidebarHeader className="m-2 text-xl font-bold text-purple-600">
-					<Link href="/fantasy">Fantasy Pro</Link>
+				<SidebarHeader className="m-2 text-xl font-bold text-primary">
+					<Link href="/fantasy" className="flex gap-2">
+						<BarChart2 className="h-6 w-6" />
+						Fantasy Pro
+					</Link>
 				</SidebarHeader>
 				<SidebarContent>
 					{subscription && leagues?.length ? (

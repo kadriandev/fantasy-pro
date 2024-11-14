@@ -119,7 +119,7 @@ INSERT INTO public.subscriptions(
   current_period_end
 ) (
   select
-    'sub_' || (ROW_NUMBER() OVER()) ,
+    'sub' || (ROW_NUMBER() OVER()) ,
     id,
     'active',
     'price_1QHxKrCS6xnAdY8yDpZp8wDm',

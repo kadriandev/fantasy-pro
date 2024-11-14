@@ -28,7 +28,7 @@ export const signUpAction = async (formData: FormData) => {
 			emailRedirectTo: `${origin}/auth/callback`,
 		},
 	});
-	await supabase.from("users").update({ first_name: first, last_name: last });
+	await supabase.from("users").update({ full_name: `${first} ${last}` });
 
 	if (error) {
 		console.error(error.code + " " + error.message);
