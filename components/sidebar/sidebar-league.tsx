@@ -20,11 +20,11 @@ interface SidebarLinkProps {
 function SidebarLink({ link, pathname, label }: SidebarLinkProps) {
 	return (
 		<SidebarMenuItem
-			className={cn("ml-4", pathname === link && "text-purple-500")}
+			className={cn("ml-4", pathname === link && "text-primary")}
 		>
 			<Link href={link}>
 				<SidebarMenuButton
-					className={cn(pathname === link && "hover:text-purple-500")}
+					className={cn(pathname === link && "hover:text-primary")}
 				>
 					{label}
 				</SidebarMenuButton>

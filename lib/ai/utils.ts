@@ -1,4 +1,4 @@
-import { Message } from "@anthropic-ai/sdk";
+import { Message } from "@anthropic-ai/sdk/resources";
 
 export const sanitizeResponseJson = (msg: Message) => {
 	if (msg.content[0].type === "text") {
