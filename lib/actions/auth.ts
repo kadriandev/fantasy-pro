@@ -2,7 +2,7 @@
 
 import { encodedRedirect } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const signUpAction = async (formData: FormData) => {
@@ -25,7 +25,7 @@ export const signUpAction = async (formData: FormData) => {
 		email,
 		password,
 		options: {
-			emailRedirectTo: `${origin}/auth/callback`,
+			emailRedirectTo: `${process.env.NEXT_PUBLUC_SITE_URL}/auth/callback`,
 		},
 	});
 	await supabase.from("users").update({ full_name: `${first} ${last}` });
