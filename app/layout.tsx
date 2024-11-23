@@ -3,33 +3,29 @@ import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
-const defaultUrl = process.env.VERCEL_URL
-	? `https://${process.env.VERCEL_URL}`
-	: "http://localhost:3000";
-
 export const metadata = {
-	metadataBase: new URL(defaultUrl),
-	title: "Fantasy Pro",
-	description: "Fantasy Analytics giving you the edge",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+  title: "Fantasy Pro",
+  description: "Fantasy Analytics giving you the edge",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<html lang="en" className={GeistSans.className} suppressHydrationWarning>
-			<body className="bg-background text-foreground">
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					<NuqsAdapter>{children}</NuqsAdapter>
-				</ThemeProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" className={GeistSans.className} suppressHydrationWarning>
+      <body className="bg-background text-foreground">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }
