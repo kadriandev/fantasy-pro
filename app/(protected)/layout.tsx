@@ -20,12 +20,12 @@ export default async function Layout({ children }: { children: ReactNode }) {
 		<SidebarProvider>
 			<AppSidebar />
 			<div>
-				<SidebarTrigger className="absolute m-4">
+				<SidebarTrigger className="sticky top-4 ml-2">
 					<Menu />
 				</SidebarTrigger>
 			</div>
 			<div className="mt-14 flex-1 w-full flex flex-col items-center">
-				<div className="w-full flex flex-col max-w-7xl px-5 pb-5">
+				<div className="w-full flex flex-col max-w-7xl pr-5 pb-5">
 					{children}
 				</div>
 			</div>
