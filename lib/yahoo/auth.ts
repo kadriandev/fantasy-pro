@@ -1,12 +1,11 @@
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { getURL } from "../utils";
-import { cookies } from "next/headers";
-import { createClient } from "../supabase/server";
+import { env } from "../env";
 
 export async function authToken() {
   const params = new URLSearchParams();
 
-  params.set("client_id", process.env.YAHOO_CLIENT_ID!);
+  params.set("client_id", env.YAHOO_CLIENT_ID);
   params.set("response_type", "code");
   params.set("redirect_uri", getURL("/auth/yahoo/callback"));
 
@@ -21,9 +20,7 @@ export async function authToken() {
 export async function accessToken(request: Request) {
   const code = request.url.split("=")[1];
 
-  const auth_token = btoa(
-    `${process.env.YAHOO_CLIENT_ID}:${process.env.YAHOO_CLIENT_SECRET}`,
-  );
+  const auth_token = btoa(`${env.YAHOO_CLIENT_ID}:${env.YAHOO_CLIENT_SECRET}`);
 
   return fetch(`https://api.login.yahoo.com/oauth2/get_token`, {
     method: "POST",
@@ -38,9 +35,7 @@ export async function accessToken(request: Request) {
 export async function refreshToken(refresh_token: RequestCookie | undefined) {
   if (!refresh_token) throw new Error("Missing refresh token");
 
-  const auth_token = btoa(
-    `${process.env.YAHOO_CLIENT_ID}:${process.env.YAHOO_CLIENT_SECRET}`,
-  );
+  const auth_token = btoa(`${env.YAHOO_CLIENT_ID}:${env.YAHOO_CLIENT_SECRET}`);
 
   return fetch(`https://api.login.yahoo.com/oauth2/get_token`, {
     method: "POST",

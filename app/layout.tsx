@@ -2,9 +2,10 @@ import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
+import { env } from "@/lib/env";
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: "Fantasy Pro",
   description: "Fantasy Analytics giving you the edge",
 };

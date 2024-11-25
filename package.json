@@ -30,6 +30,7 @@
     "@stripe/stripe-js": "^4.8.0",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-table": "^8.20.5",
     "autoprefixer": "10.4.17",
     "class-variance-authority": "^0.7.0",

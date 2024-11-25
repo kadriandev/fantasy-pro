@@ -4,6 +4,7 @@ import { encodedRedirect } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { env } from "../env";
 
 export const signUpAction = async (formData: FormData) => {
   const first = formData.get("first_name")?.toString();
@@ -13,7 +14,6 @@ export const signUpAction = async (formData: FormData) => {
   const confirm_password = formData.get("confirm_password")?.toString();
 
   const supabase = createClient();
-  const origin = headers().get("origin");
 
   if (!first || !last || !email || !password || !confirm_password) {
     return { error: "Missing required fields." };
@@ -25,7 +25,7 @@ export const signUpAction = async (formData: FormData) => {
     email,
     password,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLUC_SITE_URL}/auth/callback`,
+      emailRedirectTo: `${env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
     },
   });
   await supabase.from("users").update({ full_name: `${first} ${last}` });

@@ -1,18 +1,11 @@
 import Stripe from "stripe";
+import { env } from "../env";
 
-export const stripe = new Stripe(
-	process.env.STRIPE_SECRET_KEY_LIVE ?? process.env.STRIPE_SECRET_KEY ?? "",
-	{
-		// https://github.com/stripe/stripe-node#configuration
-		// https://stripe.com/docs/api/versioning
-		// @ts-ignore
-		apiVersion: null,
-		// Register this as an official Stripe plugin.
-		// https://stripe.com/docs/building-plugins#setappinfo
-		appInfo: {
-			name: "Fantasy Pro",
-			version: "0.0.0",
-			url: "https://fantasy-pro.kadriandev.com",
-		},
-	},
-);
+export const stripe = new Stripe(env.STRIPE_SECRET_KEY ?? "", {
+  apiVersion: "2024-09-30.acacia",
+  appInfo: {
+    name: "Fantasy Pro",
+    version: "0.0.0",
+    url: "https://fantasy-pro.kadriandev.com",
+  },
+});

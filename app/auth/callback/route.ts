@@ -1,25 +1,24 @@
+import { env } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-	// The `/auth/callback` route is required for the server-side auth flow implemented
-	// by the SSR package. It exchanges an auth code for the user's session.
-	// https://supabase.com/docs/guides/auth/server-side/nextjs
-	const requestUrl = new URL(request.url);
-	const code = requestUrl.searchParams.get("code");
-	const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
+  // The `/auth/callback` route is required for the server-side auth flow implemented
+  // by the SSR package. It exchanges an auth code for the user's session.
+  // https://supabase.com/docs/guides/auth/server-side/nextjs
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get("code");
+  const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
 
-	if (code) {
-		const supabase = createClient();
-		await supabase.auth.exchangeCodeForSession(code);
-	}
+  if (code) {
+    const supabase = createClient();
+    await supabase.auth.exchangeCodeForSession(code);
+  }
 
-	if (redirectTo) {
-		return NextResponse.redirect(
-			`${process.env.NEXT_PUBLIC_SITE_URL}/${redirectTo}`,
-		);
-	}
+  if (redirectTo) {
+    return NextResponse.redirect(`${env.NEXT_PUBLIC_SITE_URL}/${redirectTo}`);
+  }
 
-	// URL to redirect to after sign up process completes
-	return NextResponse.redirect(`${process.env.NEXT_PUBLIC_SITE_URL}/fantasy`);
+  // URL to redirect to after sign up process completes
+  return NextResponse.redirect(`${env.NEXT_PUBLIC_SITE_URL}/fantasy`);
 }
