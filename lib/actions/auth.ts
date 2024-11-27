@@ -96,19 +96,18 @@ export const forgotPasswordAction = async (formData: FormData) => {
 export const resetPasswordAction = async (formData: FormData) => {
   const supabase = createClient();
 
+  console.log("formData", formData);
+
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
 
   if (!password || !confirmPassword) {
-    encodedRedirect(
-      "error",
-      "/reset-password",
-      "Password and confirm password are required",
-    );
+    throw new Error("Password and confirm password are required");
   }
 
   if (password !== confirmPassword) {
-    encodedRedirect("error", "/reset-password", "Passwords do not match");
+    throw new Error("Passwords do not match");
+    // encodedRedirect("error", "/settings", "Passwords do not match");
   }
 
   const { error } = await supabase.auth.updateUser({
@@ -117,10 +116,12 @@ export const resetPasswordAction = async (formData: FormData) => {
 
   if (error) {
     console.log(password, confirmPassword, error);
-    encodedRedirect("error", "/reset-password", "Password update failed");
+    throw new Error("Unable to change password");
+    // encodedRedirect("error", "/reset-password", "Password update failed");
   }
 
-  encodedRedirect("success", "/reset-password", "Password updated");
+  return { success: true };
+  // encodedRedirect("success", "/reset-password", "Password updated");
 };
 
 export const signOutAction = async () => {

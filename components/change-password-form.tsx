@@ -1,17 +1,28 @@
+"use client";
+
 import { resetPasswordAction } from "@/lib/actions/auth";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createClient } from "@/lib/supabase/server";
+import { useFormState } from "react-dom";
+import { useEffect } from "react";
 
-export default async function ResetPassword({
-  searchParams,
-}: {
-  searchParams: any;
-}) {
+export default function ChangePasswordForm() {
+  const [state, formAction] = useFormState(resetPasswordAction, {
+    password: "",
+    confirmPassword: "",
+  });
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
   return (
-    <form className="flex flex-col w-full max-w-md p-4 gap-2 [&>input]:mb-4">
-      <h1 className="text-2xl font-medium">Reset password</h1>
+    <form
+      action={formAction}
+      className="mt-10 mx-auto flex flex-col w-full max-w-md p-4 gap-2 [&>input]:mb-4"
+    >
+      <h1 className="text-2xl font-medium">Change password</h1>
       <p className="text-sm text-foreground/60">
         Please enter your new password below.
       </p>
@@ -29,9 +40,8 @@ export default async function ResetPassword({
         placeholder="Confirm password"
         required
       />
-      <SubmitButton formAction={resetPasswordAction}>
-        Reset password
-      </SubmitButton>
+
+      <SubmitButton>Reset password</SubmitButton>
     </form>
   );
 }

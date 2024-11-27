@@ -5,6 +5,48 @@ import type {
 } from "./types";
 import { createClient, createServiceClient } from "../supabase/server";
 import { createYahooClient } from ".";
+import { getNewInsight } from "../ai/queries";
+import { TeamInsight } from "../ai/types";
+
+const fetchDataForNewWeek = async (
+  league_key: string,
+  team_key: string,
+  week: number,
+  unsavedWeeks: number,
+) => {
+  const supabase = createClient();
+  const yf = createYahooClient();
+
+  const weeksToFetch = Array(unsavedWeeks)
+    .fill(week ?? 0)
+    .map((x, i) => x + i + 1)
+    .join(",");
+
+  const scoreboard: YahooLeagueScoreboard = await yf.league.scoreboard(
+    league_key,
+    weeksToFetch,
+  );
+
+  const teams = scoreboard.scoreboard.matchups.flatMap((m) => m.teams);
+  const stats = teams.map((t) => ({
+    league_key,
+    week: +t.points.week,
+    team_id: t.team_id,
+    name: t.name,
+    stats: t.stats,
+  }));
+
+  await supabase.from("league_stats").insert(stats);
+
+  const insight: TeamInsight = await getNewInsight(league_key, team_key);
+  await supabase
+    .from("user_leagues")
+    .update({
+      last_insight: new Date().toISOString(),
+      team_insights: JSON.stringify(insight),
+    })
+    .eq("league_key", league_key);
+};
 
 export const getUsersTeamId = async (league_key: string) => {
   const supabase = createClient();
@@ -13,7 +55,7 @@ export const getUsersTeamId = async (league_key: string) => {
     .select("team_id")
     .eq("league_key", league_key)
     .single()
-    .then((data) => data.data?.team_id);
+    .then((data) => data.data?.team_id as string);
 };
 
 export const getUserLeagues = async () => {
@@ -39,7 +81,10 @@ export const insertUserLeagues = async (
   await supabase.from("user_leagues").upsert(user_leagues);
 };
 
-export const fetchAndSaveLeagueStats = async (league_key: string) => {
+export const fetchAndSaveLeagueStats = async (
+  league_key: string,
+  team_key: string,
+) => {
   const supabase = createClient();
   const yf = createYahooClient();
 
@@ -54,32 +99,18 @@ export const fetchAndSaveLeagueStats = async (league_key: string) => {
       .maybeSingle(),
   ]);
 
-  // Save last week if it doesnt exist
+  // Fetch and save last week if it doesnt exist
   const unsavedWeeks = settings.current_week - (data.data?.week ?? 0) - 1;
   if (data.data === null || unsavedWeeks) {
-    const weeksToFetch = Array(unsavedWeeks)
-      .fill(data.data?.week ?? 0)
-      .map((x, i) => x + i + 1)
-      .join(",");
-
-    const scoreboard: YahooLeagueScoreboard = await yf.league.scoreboard(
+    await fetchDataForNewWeek(
       league_key,
-      weeksToFetch,
+      team_key,
+      data.data?.week,
+      unsavedWeeks,
     );
-
-    const teams = scoreboard.scoreboard.matchups.flatMap((m) => m.teams);
-    const stats = teams.map((t) => ({
-      league_key,
-      week: +t.points.week,
-      team_id: t.team_id,
-      name: t.name,
-      stats: t.stats,
-    }));
-
-    await supabase.from("league_stats").insert(stats);
   }
 
-  const [cats, stats] = await Promise.all([
+  const [cats, stats, insights] = await Promise.all([
     supabase
       .from("leagues")
       .select("stat_categories")
@@ -91,11 +122,18 @@ export const fetchAndSaveLeagueStats = async (league_key: string) => {
       .select("*")
       .eq("league_key", league_key)
       .then((res) => res.data),
+    supabase
+      .from("user_leagues")
+      .select("team_insights")
+      .eq("league_key", league_key)
+      .single()
+      .then((res) => JSON.parse(res.data?.team_insights as string)),
   ]);
 
   return {
     current_week: settings.current_week as number,
     cats: cats as YahooSettingsStatCategory[],
     stats: stats as DBFantasyStats[],
+    insights: insights,
   };
 };

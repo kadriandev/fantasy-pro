@@ -1,6 +1,6 @@
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { getURL } from "../utils";
-import { env } from "../env";
+import { env } from "@/lib/env";
 
 export async function authToken() {
   const params = new URLSearchParams();
