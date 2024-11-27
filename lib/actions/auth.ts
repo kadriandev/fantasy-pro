@@ -74,6 +74,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
+    console.log(error);
     return encodedRedirect(
       "error",
       "/forgot-password",
