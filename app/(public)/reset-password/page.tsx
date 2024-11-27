@@ -2,7 +2,7 @@ import { resetPasswordAction } from "@/lib/actions/auth";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createClient } from "@/lib/supabase/server";
+import { FormMessage } from "@/components/form-message";
 
 export default async function ResetPassword({
   searchParams,
@@ -32,6 +32,7 @@ export default async function ResetPassword({
       <SubmitButton formAction={resetPasswordAction}>
         Reset password
       </SubmitButton>
+      <FormMessage message={searchParams} />
     </form>
   );
 }
