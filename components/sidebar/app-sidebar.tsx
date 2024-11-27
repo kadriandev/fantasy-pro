@@ -1,4 +1,4 @@
-import { BarChart2, ChevronDown, Icon, Menu } from "lucide-react";
+import { BarChart2, ChevronDown, Icon } from "lucide-react";
 import { baseball, basketball, football } from "@lucide/lab";
 
 import {
@@ -20,7 +20,7 @@ import {
   CollapsibleContent,
 } from "@radix-ui/react-collapsible";
 import SidebarLeagueLinks from "./sidebar-league";
-import SignOutButton from "../sign-out-button";
+import SignOutButton from "./sign-out-button";
 import { getSubscription } from "@/lib/supabase/queries";
 import { getUserLeagues } from "@/lib/yahoo/queries";
 import { ThemeSwitcher } from "../theme-switcher";
