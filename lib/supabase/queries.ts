@@ -10,7 +10,7 @@ export const getUser = cache(async () => {
   return user!;
 });
 
-export const getSubscription = cache(async () => {
+export const getSubscription = async () => {
   const supabase = createClient();
   const { data: subscription, error } = await supabase
     .from("subscriptions")
@@ -19,9 +19,9 @@ export const getSubscription = cache(async () => {
     .maybeSingle();
 
   return subscription;
-});
+};
 
-export const getProducts = cache(async () => {
+export const getProducts = async () => {
   const supabase = createClient();
   const { data: products, error } = await supabase
     .from("products")
@@ -32,7 +32,7 @@ export const getProducts = cache(async () => {
     .order("unit_amount", { referencedTable: "prices" });
 
   return products;
-});
+};
 
 export const getUserDetails = cache(async () => {
   const supabase = createClient();
