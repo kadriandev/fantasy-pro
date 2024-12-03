@@ -9,7 +9,6 @@ import { Form, FormItem, FormField, FormLabel, FormControl } from "./ui/form";
 import { User } from "@supabase/supabase-js";
 import { useToast } from "@/hooks/use-toast";
 import { updateUserProfileAction } from "@/lib/actions/account";
-import Link from "next/link";
 
 const formSchema = z.object({
   full_name: z.string(),

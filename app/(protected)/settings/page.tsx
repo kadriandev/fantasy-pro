@@ -22,11 +22,13 @@ export default async function Account() {
           <TabsList className="">
             <TabsTrigger value="account">Account</TabsTrigger>
             <TabsTrigger value="billing">Billing</TabsTrigger>
-            {/* <TabsTrigger value="change-password">Change Password</TabsTrigger> */}
           </TabsList>
         </div>
         <TabsContent value="account">
-          <AccountForm user={user} profile={user_details} />
+          <AccountForm
+            user={user}
+            profile={{ full_name: user_details?.full_name! }}
+          />
         </TabsContent>
         <TabsContent value="billing">
           <div className="max-w-6xl px-4 mx-auto sm:px-6 sm:pt-24 lg:px-8">
