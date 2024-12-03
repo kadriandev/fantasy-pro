@@ -35,7 +35,7 @@ export default function Pricing({ user, products, subscription }: Props) {
 
   const handleStripeCheckout = async (price: Price) => {
     if (subscription) {
-      return router.push("/account");
+      return router.push("/settings");
     }
 
     if (!user) {

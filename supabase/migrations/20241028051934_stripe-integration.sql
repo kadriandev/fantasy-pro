@@ -4,7 +4,7 @@
 */
 create table users (
   -- UUID from auth.users
-  id uuid references auth.users not null primary key,
+  id uuid references auth.users not null primary key on delete cascade,
   full_name text,
   avatar_url text,
   -- The customer's billing address, stored in JSON format.

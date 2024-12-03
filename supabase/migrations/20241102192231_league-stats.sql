@@ -36,7 +36,7 @@ create table
     team_id text null,
     constraint user_leagues_pkey primary key (user_id, league_key),
     constraint user_leagues_league_id_fkey foreign key (league_key) references public.leagues (league_key),
-    constraint user_leagues_user_id_fkey foreign key (user_id) references public.users (id)
+    constraint user_leagues_user_id_fkey foreign key (user_id) references public.users (id) on delete cascade
   ) tablespace pg_default;
 
 alter table public.user_leagues enable row level security;
