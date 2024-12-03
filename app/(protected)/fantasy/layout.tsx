@@ -12,7 +12,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
   const subscription = await getSubscription();
   if (!subscription) {
-    redirect(getURL("/settings"));
+    redirect(getURL("/settings/plans"));
   }
 
   if (!access_token) {

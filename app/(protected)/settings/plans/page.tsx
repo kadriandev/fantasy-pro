@@ -3,18 +3,17 @@ import { getUser, getProducts, getSubscription } from "@/lib/supabase/queries";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function PlansPage() {
-	const supabase = createClient();
-	const [user, products, subscription] = await Promise.all([
-		getUser(supabase),
-		getProducts(supabase),
-		getSubscription(supabase),
-	]);
+  const [user, products, subscription] = await Promise.all([
+    getUser(),
+    getProducts(),
+    getSubscription(),
+  ]);
 
-	return (
-		<Pricing
-			user={user}
-			products={products ?? []}
-			subscription={subscription}
-		/>
-	);
+  return (
+    <Pricing
+      user={user}
+      products={products ?? []}
+      subscription={subscription}
+    />
+  );
 }
