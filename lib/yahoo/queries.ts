@@ -93,16 +93,15 @@ export const fetchAndSaveLeagueStats = async (
     supabase
       .from("league_stats")
       .select("week")
-      .eq("league_key", league_key)
       .order("week", { ascending: false })
+      .eq("league_key", league_key)
       .limit(1)
       .maybeSingle(),
   ]);
 
-  console.log("fetch unsaved weeks");
   // Fetch and save last week if it doesnt exist
   const unsavedWeeks = settings.current_week - (data.data?.week ?? 0) - 1;
-  console.log("unsaved weeks:", unsavedWeeks);
+  console.log("current_week:", settings.current_week);
   console.log("data.data:", data.data);
   if (data.data === null || unsavedWeeks) {
     console.log("fetch new week data: ", data.data?.week, unsavedWeeks);
