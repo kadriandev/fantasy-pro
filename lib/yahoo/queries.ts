@@ -7,6 +7,9 @@ import { createClient, createServiceClient } from "../supabase/server";
 import { createYahooClient } from ".";
 import { getNewInsight } from "../ai/queries";
 import { TeamInsight } from "../ai/types";
+import { Json, Tables } from "../supabase/types";
+
+type LeagueStats = Tables<"league_stats">;
 
 const fetchDataForNewWeek = async (
   league_key: string,
@@ -19,26 +22,23 @@ const fetchDataForNewWeek = async (
 
   const weeksToFetch = Array(unsavedWeeks)
     .fill(week ?? 0)
-    .map((x, i) => x + i + 1)
-    .join(",");
+    .map((x, i) => x + i + 1);
 
-  console.log(weeksToFetch);
-
-  const scoreboard: YahooLeagueScoreboard = await yf.league.scoreboard(
-    league_key,
-    weeksToFetch,
+  const scoreboard_weeks: YahooLeagueScoreboard[] = await Promise.all(
+    weeksToFetch.map((w) => yf.league.scoreboard(league_key, w)),
   );
-  console.log(scoreboard);
 
-  const teams = scoreboard.scoreboard.matchups.flatMap((m) => m.teams);
-  const stats = teams.map((t) => ({
-    league_key,
-    week: +t.points.week,
-    team_id: t.team_id,
-    name: t.name,
-    stats: t.stats,
-  }));
-  console.log("stats", stats);
+  const stats: LeagueStats[] = scoreboard_weeks.reduce((acc, curr) => {
+    const teams = curr.scoreboard.matchups.flatMap((m) => m.teams);
+    const stats: LeagueStats[] = teams.map((t) => ({
+      league_key,
+      week: +t.points.week,
+      team_id: t.team_id,
+      name: t.name,
+      stats: t.stats as Json,
+    }));
+    return [...acc, ...stats];
+  }, [] as LeagueStats[]);
   await supabase.from("league_stats").insert(stats);
 
   const insight: TeamInsight = await getNewInsight(league_key, team_key);
