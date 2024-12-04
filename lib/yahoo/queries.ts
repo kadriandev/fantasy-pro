@@ -99,13 +99,17 @@ export const fetchAndSaveLeagueStats = async (
       .maybeSingle(),
   ]);
 
+  console.log("fetch unsaved weeks");
   // Fetch and save last week if it doesnt exist
   const unsavedWeeks = settings.current_week - (data.data?.week ?? 0) - 1;
+  console.log("unsaved weeks:", unsavedWeeks);
+  console.log("data.data:", data.data);
   if (data.data === null || unsavedWeeks) {
+    console.log("fetch new week data: ", data.data?.week, unsavedWeeks);
     await fetchDataForNewWeek(
       league_key,
       team_key,
-      data.data?.week,
+      data.data?.week ?? 0,
       unsavedWeeks,
     );
   }

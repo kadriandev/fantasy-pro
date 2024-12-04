@@ -11,6 +11,7 @@ export interface OverviewPageProps {
 
 export default async function OverviewPage({ params }: OverviewPageProps) {
   const userTeamId = await getUsersTeamId(params.league_key);
+  console.log("fetch league stats");
   const { cats, stats, insights } = await fetchAndSaveLeagueStats(
     params.league_key,
     userTeamId,
