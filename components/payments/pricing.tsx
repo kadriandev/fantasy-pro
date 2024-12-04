@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import getStripe from "@/lib/stripe/get-stripe";
-import { env } from "process";
+import { env } from "@/lib/env";
 
 type Subscription = Tables<"subscriptions">;
 type Product = Tables<"products">;
@@ -65,8 +65,6 @@ export default function Pricing({ user, products, subscription }: Props) {
   const product = products.find(
     (p) => p.id === env.NEXT_PUBLIC_STRIPE_PRODUCT_ID,
   );
-
-  console.log(products, product);
 
   if (!product) {
     return (
