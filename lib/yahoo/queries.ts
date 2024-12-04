@@ -28,6 +28,7 @@ const fetchDataForNewWeek = async (
     league_key,
     weeksToFetch,
   );
+  console.log(scoreboard);
 
   const teams = scoreboard.scoreboard.matchups.flatMap((m) => m.teams);
   const stats = teams.map((t) => ({
