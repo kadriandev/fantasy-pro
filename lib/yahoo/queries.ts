@@ -22,6 +22,8 @@ const fetchDataForNewWeek = async (
     .map((x, i) => x + i + 1)
     .join(",");
 
+  console.log(weeksToFetch);
+
   const scoreboard: YahooLeagueScoreboard = await yf.league.scoreboard(
     league_key,
     weeksToFetch,
@@ -35,7 +37,7 @@ const fetchDataForNewWeek = async (
     name: t.name,
     stats: t.stats,
   }));
-
+  console.log("stats", stats);
   await supabase.from("league_stats").insert(stats);
 
   const insight: TeamInsight = await getNewInsight(league_key, team_key);
@@ -93,18 +95,15 @@ export const fetchAndSaveLeagueStats = async (
     supabase
       .from("league_stats")
       .select("week")
-      .order("week", { ascending: false })
       .eq("league_key", league_key)
+      .order("week", { ascending: false })
       .limit(1)
       .maybeSingle(),
   ]);
 
   // Fetch and save last week if it doesnt exist
   const unsavedWeeks = settings.current_week - (data.data?.week ?? 0) - 1;
-  console.log("current_week:", settings.current_week);
-  console.log("data.data:", data.data);
   if (data.data === null || unsavedWeeks) {
-    console.log("fetch new week data: ", data.data?.week, unsavedWeeks);
     await fetchDataForNewWeek(
       league_key,
       team_key,
