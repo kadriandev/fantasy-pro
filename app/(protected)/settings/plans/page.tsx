@@ -8,8 +8,6 @@ export default async function PlansPage() {
     getSubscription(),
   ]);
 
-  console.log(products, subscription);
-
   return (
     <Pricing
       user={user}

@@ -35,7 +35,7 @@ export default function Pricing({ user, products, subscription }: Props) {
 
   const handleStripeCheckout = async (price: Price) => {
     if (subscription) {
-      return router.push("/settings");
+      return router.push("/settings/plans");
     }
 
     if (!user) {
@@ -65,6 +65,8 @@ export default function Pricing({ user, products, subscription }: Props) {
   const product = products.find(
     (p) => p.id === env.NEXT_PUBLIC_STRIPE_PRODUCT_ID,
   );
+
+  console.log(products, product);
 
   if (!product) {
     return (
