@@ -8,60 +8,60 @@ import { YahooGameLeague } from "@/lib/yahoo/types";
 import { ArrowRight } from "lucide-react";
 
 interface SidebarLeagueLinksProps {
-	league: YahooGameLeague;
+  league: YahooGameLeague;
 }
 
 interface SidebarLinkProps {
-	label: string;
-	link: string;
-	pathname: string;
+  label: string;
+  link: string;
+  pathname: string;
 }
 
 function SidebarLink({ link, pathname, label }: SidebarLinkProps) {
-	return (
-		<SidebarMenuItem
-			className={cn("ml-4", pathname === link && "text-primary")}
-		>
-			<Link href={link}>
-				<SidebarMenuButton
-					className={cn(pathname === link && "hover:text-primary")}
-				>
-					{label}
-				</SidebarMenuButton>
-			</Link>
-		</SidebarMenuItem>
-	);
+  return (
+    <SidebarMenuItem
+      className={cn("ml-4", pathname === link && "text-primary")}
+    >
+      <Link href={link}>
+        <SidebarMenuButton
+          className={cn(pathname === link && "hover:text-primary")}
+        >
+          {label}
+        </SidebarMenuButton>
+      </Link>
+    </SidebarMenuItem>
+  );
 }
 
 export default function SidebarLeagueLinks({
-	league,
+  league,
 }: SidebarLeagueLinksProps) {
-	const pathname = usePathname();
-	const league_key = league.league_key;
-	return (
-		<>
-			<SidebarMenuItem className={"ml-4"}>
-				<Link href={league.url}>
-					<SidebarMenuButton className={"text-purple-300"}>
-						Go to Yahoo <ArrowRight size={20} />
-					</SidebarMenuButton>
-				</Link>
-			</SidebarMenuItem>
-			<SidebarLink
-				label={"Overview"}
-				link={`/fantasy/${league_key}`}
-				pathname={pathname}
-			/>
-			<SidebarLink
-				label={"Standings"}
-				link={`/fantasy/${league_key}/standings`}
-				pathname={pathname}
-			/>
-			<SidebarLink
-				label={"Stats"}
-				link={`/fantasy/${league_key}/stats`}
-				pathname={pathname}
-			/>
-		</>
-	);
+  const pathname = usePathname();
+  const league_key = league.league_key;
+  return (
+    <>
+      <SidebarMenuItem className={"ml-4"}>
+        <Link href={league.url}>
+          <SidebarMenuButton className={"text-purple-300"}>
+            Go to Yahoo <ArrowRight size={20} />
+          </SidebarMenuButton>
+        </Link>
+      </SidebarMenuItem>
+      <SidebarLink
+        label={"Overview"}
+        link={`/fantasy/${league_key}`}
+        pathname={pathname}
+      />
+      <SidebarLink
+        label={"Standings"}
+        link={`/fantasy/${league_key}/standings`}
+        pathname={pathname}
+      />
+      <SidebarLink
+        label={"Stats"}
+        link={`/fantasy/${league_key}/stats`}
+        pathname={pathname}
+      />
+    </>
+  );
 }

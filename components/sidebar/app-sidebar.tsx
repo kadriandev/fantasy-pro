@@ -1,5 +1,5 @@
 import { BarChart2, ChevronDown, Icon } from "lucide-react";
-import { baseball, basketball, football } from "@lucide/lab";
+import { baseball, basketball, football, hockey } from "@lucide/lab";
 
 import {
   Sidebar,
@@ -53,6 +53,8 @@ export async function AppSidebar() {
                               <Icon iconNode={basketball} />
                             ) : l.game === "nfl" ? (
                               <Icon iconNode={football} />
+                            ) : l.game === "nhl" ? (
+                              <Icon iconNode={hockey} />
                             ) : (
                               <Icon iconNode={baseball} />
                             )}
@@ -75,13 +77,11 @@ export async function AppSidebar() {
         </SidebarContent>
         <SidebarFooter className="mb-8">
           <SidebarGroup>
-            {/* <SidebarGroupLabel className="text-lg">Settings</SidebarGroupLabel> */}
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
                     <Link href="/settings">
-                      {/* <item.icon /> */}
                       <span>Settings</span>
                     </Link>
                   </SidebarMenuButton>
