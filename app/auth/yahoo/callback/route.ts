@@ -1,7 +1,9 @@
-import { accessToken } from "@/lib/yahoo/auth";
+import { accessToken, userInfo } from "@/lib/yahoo/auth";
 import { NextResponse } from "next/server";
 import { getURL } from "@/lib/utils";
 import { cookies } from "next/headers";
+import { env } from "@/lib/env";
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
   const cookieStore = cookies();
@@ -10,6 +12,7 @@ export async function GET(request: Request) {
   if (res.error) {
     cookieStore.delete("access_token");
     cookieStore.delete("refresh_token");
+    return NextResponse.redirect(getURL("/"));
   }
 
   if (res.access_token?.length)
@@ -24,6 +27,21 @@ export async function GET(request: Request) {
       httpOnly: true,
       path: "/",
     });
+
+  const user = await userInfo(res.access_token as string);
+
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.signUp({
+    email: user.email,
+    password: user.sub,
+  });
+
+  if (error) {
+    await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: user.sub,
+    });
+  }
 
   return NextResponse.redirect(getURL("/fantasy"));
 }

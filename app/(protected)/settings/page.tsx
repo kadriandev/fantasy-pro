@@ -6,7 +6,6 @@ import {
 } from "@/lib/supabase/queries";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import AccountForm from "@/components/account-form";
-import ChangePasswordForm from "@/components/change-password-form";
 
 export default async function Account() {
   const [user, user_details, subscription] = await Promise.all([
@@ -39,9 +38,6 @@ export default async function Account() {
             </div>
           </div>
           <CustomerPortalForm subscription={subscription} />
-        </TabsContent>
-        <TabsContent value="change-password">
-          <ChangePasswordForm />
         </TabsContent>
       </Tabs>
     </div>

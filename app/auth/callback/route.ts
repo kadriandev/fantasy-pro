@@ -20,5 +20,5 @@ export async function GET(request: Request) {
   }
 
   // URL to redirect to after sign up process completes
-  return NextResponse.redirect(`${env.NEXT_PUBLIC_SITE_URL}/fantasy`);
+  return NextResponse.redirect(`${env.NEXT_PUBLIC_SITE_URL}/settings/plans`);
 }

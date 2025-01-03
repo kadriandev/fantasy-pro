@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { BarChart2 } from "lucide-react";
+import SignInButton from "./sign-in-button";
 
 export default async function Navbar() {
   return (
@@ -39,10 +40,7 @@ export default async function Navbar() {
 
         <div className="flex gap-4">
           <Button asChild size="sm" variant={"outline"}>
-            <Link href="/sign-in">Sign in</Link>
-          </Button>
-          <Button asChild size="sm" variant={"default"}>
-            <Link href="/sign-up">Sign up</Link>
+            <SignInButton />
           </Button>
         </div>
       </nav>

@@ -46,3 +46,13 @@ export async function refreshToken(refresh_token: RequestCookie | undefined) {
     body: `grant_type=refresh_token&redirect_uri=oob&refresh_token=${refresh_token.value}`,
   }).then((res) => res.json());
 }
+
+export async function userInfo(accessToken: string) {
+  return fetch(`https://api.login.yahoo.com/openid/v1/userinfo`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json());
+}

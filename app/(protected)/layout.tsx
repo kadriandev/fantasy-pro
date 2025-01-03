@@ -8,12 +8,10 @@ import { Menu } from "lucide-react";
 export default async function Layout({ children }: { children: ReactNode }) {
   const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
-  if (!user) {
-    return redirect("/sign-in");
+  if (!data.user) {
+    return redirect("/");
   }
 
   return (
