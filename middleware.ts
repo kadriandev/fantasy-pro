@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   });
 
   // Public Pages
-  if (!["auth", "pricing"].includes(request.nextUrl.pathname)) {
+  if (!["", "auth", "pricing"].includes(request.nextUrl.pathname)) {
     response = await updateSession(request, response);
   }
 
