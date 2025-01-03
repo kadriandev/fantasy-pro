@@ -2,12 +2,12 @@ import { accessToken, userInfo } from "@/lib/yahoo/auth";
 import { NextResponse } from "next/server";
 import { getURL } from "@/lib/utils";
 import { cookies } from "next/headers";
-import { env } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
   const cookieStore = cookies();
   const res = await accessToken(request);
+  console.log(res);
 
   if (res.error) {
     cookieStore.delete("access_token");
