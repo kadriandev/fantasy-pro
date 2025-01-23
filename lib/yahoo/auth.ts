@@ -6,6 +6,8 @@ export async function authToken() {
   const params = new URLSearchParams();
 
   params.set("client_id", env.YAHOO_CLIENT_ID);
+  params.set("scope", "openid");
+  params.set("nonce", "12345");
   params.set("response_type", "code");
   params.set("redirect_uri", getURL("/auth/yahoo/callback"));
 
