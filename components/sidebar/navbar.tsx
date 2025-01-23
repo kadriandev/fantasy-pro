@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { BarChart2 } from "lucide-react";
 import SignInButton from "./sign-in-button";
+import { createClient } from "@/lib/supabase/server";
 import { signOutAction } from "@/lib/actions/auth";
 
 export default async function Navbar() {
