@@ -2,8 +2,12 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { BarChart2 } from "lucide-react";
 import SignInButton from "./sign-in-button";
+import { signOutAction } from "@/lib/actions/auth";
 
 export default async function Navbar() {
+  const supabase = createClient();
+
+  const { data } = await supabase.auth.getUser();
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center">
       <Link className="flex items-center justify-center" href="#">
@@ -39,9 +43,15 @@ export default async function Navbar() {
         </Link>
 
         <div className="flex gap-4">
-          <Button asChild size="sm" variant={"outline"}>
-            <SignInButton />
-          </Button>
+          {!data.user ? (
+            <Button asChild size="sm" variant={"outline"}>
+              <SignInButton />
+            </Button>
+          ) : (
+            <Button variant={"outline"} onClick={signOutAction}>
+              Sign Out
+            </Button>
+          )}
         </div>
       </nav>
     </header>
