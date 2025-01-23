@@ -36,10 +36,12 @@ export async function GET(request: Request) {
   });
 
   if (error) {
-    await supabase.auth.signInWithPassword({
+    console.log("Signing in");
+    const res = await supabase.auth.signInWithPassword({
       email: user.email,
       password: user.sub,
     });
+    console.log(res.data.user);
   }
 
   return NextResponse.redirect(getURL("/fantasy"));
