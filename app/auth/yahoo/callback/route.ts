@@ -7,7 +7,6 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request: Request) {
   const cookieStore = cookies();
   const res = await accessToken(request);
-  console.log(res);
 
   if (res.error) {
     cookieStore.delete("access_token");
