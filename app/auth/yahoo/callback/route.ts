@@ -27,21 +27,25 @@ export async function GET(request: Request) {
       path: "/",
     });
 
-  const user = await userInfo(res.access_token as string);
+  try {
+    const user = await userInfo(res.access_token as string);
 
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.signUp({
-    email: user.email,
-    password: user.sub,
-  });
-
-  if (error) {
-    console.log("Signing in");
-    const res = await supabase.auth.signInWithPassword({
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.signUp({
       email: user.email,
       password: user.sub,
     });
-    console.log(res.data.user);
+
+    if (error) {
+      console.log("Signing in");
+      const res = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: user.sub,
+      });
+      console.log(res.data.user);
+    }
+  } catch (e) {
+    console.log(e);
   }
 
   return NextResponse.redirect(getURL("/fantasy"));
